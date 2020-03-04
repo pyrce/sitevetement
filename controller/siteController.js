@@ -6,13 +6,17 @@ var Sequelize=require('sequelize')
 const sequelize = new Sequelize('mysql://root:root@localhost:8889/vetement');
 
 controller.liste=(req,res)=>{
-console.log("listes produits")
+
     op.findAll()
 .then((data)=>{
-    console.log(data)
+
     res.render("accueil",{product:data});
 })
 
+}
+
+controller.ajout=(req,res)=>{
+    res.render("ajout");
 }
 
 module.exports=controller;

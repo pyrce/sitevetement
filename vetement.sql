@@ -70,25 +70,18 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `vetement`.`produits` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom_produit` VARCHAR(45) NULL,
-  `id_categorie` INT NULL,
   `stock` INT NULL,
   `prix_unitaire` VARCHAR(10) NULL,
   `designation` VARCHAR(45) NULL,
   `image_produit` VARCHAR(30) NULL,
   `montant_ligne` VARCHAR(45) NULL,
   `categories_id` INT NOT NULL,
-  `panier_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_produits_categories1_idx` (`categories_id` ASC) ,
   INDEX `fk_produits_panier1_idx` (`panier_id` ASC) ,
   CONSTRAINT `fk_produits_categories1`
     FOREIGN KEY (`categories_id`)
     REFERENCES `vetement`.`categories` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_produits_panier1`
-    FOREIGN KEY (`panier_id`)
-    REFERENCES `vetement`.`panier` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -99,7 +92,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vetement`.`commentaire` (
   `id` INT NOT NULL,
-  `id_user` INT NULL,
   `id_produit` INT NULL,
   `commentaire` VARCHAR(128) NULL,
   `date` VARCHAR(45) NULL,
