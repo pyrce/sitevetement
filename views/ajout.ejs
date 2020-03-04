@@ -1,0 +1,31 @@
+<% include ('partials/partials.ejs') %>
+
+
+<div class="container-fluid d-flex justify-content-center">
+
+
+    <form action="/add" method="post" class="text-center">
+
+            <div class="form-group row">
+
+                <label for="input_url"> Url</label>
+                <input type="text" class="form-control" name="url" id="input_url">
+
+            </div>
+
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+
+
+    </form>
+</div>
+<style>
+form{
+    outline:solid 1px black;
+    width:15%;
+    height: 10%;
+    display:flex;
+    justify-self: center;
+    align-items: center;
+}
+</style>
