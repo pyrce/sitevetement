@@ -1,15 +1,26 @@
 controller={}
 const opModel=require('../model/produits');
-const cat=require('../model/categories').categories;
+var Sequelize = require('sequelize');
+var sql = require("mysql2");
+const cat=require("../model/categories").categories;
 var op=opModel.produits;
-var mysql = require('mysql2');
-var Sequelize=require('sequelize')
-const sequelize = new Sequelize('mysql://root:root@localhost:8889/vetement',{
-
-    // disable logging; default: console.log
-    logging: false
-  
-  });
+var sequelize;
+//db=(typeof process.env.DB_DATABASE!="undefined") ? process.env.DB_CONNECTION+"://"+process.env.DB_USER+":"+process.env.DB_PASSWORD+"@"+process.env.DB_HOST+":"+process.env.DB_PORT+"/"+process.env.DB_DATABASE :"mysql://root:root@localhost:3306/vetement"
+if (process.env.DATABASE_URL) {
+    // the application is executed on Heroku ... use the postgres database
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+      dialect:  'postgres',
+      protocol: 'postgres'
+    })
+  }else{
+     sequelize = new Sequelize("mysql://root:root@localhost:3306/vetement",{
+        dialect:  'mysql',
+        protocol: 'mysql',
+        // disable logging; default: console.log
+        logging: false
+      
+      });
+  }
 
 controller.liste=(req,res)=>{
     const pageSize=10;

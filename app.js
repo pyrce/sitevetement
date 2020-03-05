@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser());
 
 // importing routes
-const operationRoutes = require('./route/siteRoutes');
+const operationRoutes = require("./route/siteRoutes");
 const panierRoutes = require('./route/panierRoute');
 // settings
 app.set('port', process.env.PORT || 3000);
