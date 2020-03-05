@@ -1,5 +1,74 @@
-<% for(p of product){%>
-Nom : <%= p.nom_produit %>
-    <%}%>
+<%- include ('partials/partials.ejs') %>
+   
+  <div class="d-flex  justify-content-around ">
+        <select class="form-control col-1 mt-5 ml-5">
+          <option>Toutes les catégories</option>
+          <option>Catégorie 1</option>
+          <option>Catégorie 2</option>
+          <option>Catégorie 3</option>
+        </select>
+  
+        <form class="col-6 mt-5">
+          <div class="form-group col-4">
+            <label for="test1">Prix min.</label>
+            <input class="form-control" type="text" placeholder="Prix minimum" id="test1">
+          </div>
+          <div class="form-group col-4">
+            <label for="test2">Prix max.</label>
+            <input class="form-control" type="text" placeholder="Prix maximum" id="test2">
+          </div>
+      
+      
+          <button type="submit" class="btn text-white" style="background-color: #796a5a;">Rechercher</button>
+        </form>
+      </div>
+  
+  
+        
+      
+  
+        <nav aria-label="...">
+          <ul class="pagination pagination-lg mt-5 ml-5">
+            <%for(i=1;i<total;i++){%>
+              <li class="page-item"><a class="page-link"  href="/<%=i%>" style="color:#212529;"><%=i%></a></li>
+              <%}%>
+          
+          </ul>
+        </nav>
+        <div class="d-flex mt-5">
+<%for(p of product){%>
+      <div class="card shadow" style="width: 18rem;">
+          <h5 class="card-title m-auto"><%=p.nom_produit%></h5>
+          
+          <img src="..." class="card-img-top " alt="...">
+          <div class="card-body">
+            
+            <p class="card-text"><%=p.description%></p>
+            <div class="d-flex justify-content-between"><p><%=p.prix_unitaire%> €</p>
+            <button type="button" class="btn" style="background-color:#796a5a;"><i class="fas fa-cart-plus text-white"></i></button></div>
+          </div>
+          
+      </div>
+      <%}%>
+      </div>
+      
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  
+<script>
+    function remove(){
+        item=event.target.dataset.id;
+        $.ajax({
+    url: '/produits/'+item,
+    type: 'DELETE',
+    success: function(result) {
+        
+        // Do something with the result
+    }
+});
+    }
 
-    <a href="/produits/ajout" >Ajout</a> 
+</script>

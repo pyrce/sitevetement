@@ -1,0 +1,39 @@
+<% include('partials/partials') %>
+<form action="add" method="post">
+
+    <div class="form-group">
+        <label for="nomProduit">Nom produit</label>
+        <input type="text" class="form-control" name="nomproduit" id="nomProduit" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+
+      <div class="form-group">
+        <label for="designation">Categorie</label>
+        <select name="categorie" >
+            <%for(c of cat){%>
+<option value="<%=c.id%>"><%=c.nom_categorie%></option>
+                <%}%>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="designation">Designation</label>
+        <input type="text" class="form-control" name="designation" id="designation" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+
+      <div class="form-group">
+        <label for="image">Image</label>
+        <input type="text" class="form-control" name="image" id="image" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+
+      <div class="form-group">
+        <label for="designation">Prix</label>
+        <input type="number" class="form-control" name="prix" id="prix" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input type="number" class="form-control" name="stock" id="stock" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Ajout</button>
+</form>

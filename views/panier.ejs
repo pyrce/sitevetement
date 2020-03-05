@@ -1,0 +1,56 @@
+<%- include ('partials/partials.ejs') %>
+
+<div class="jumbotron jumbotron-fluid d-flex col-12 p-0  mt-5"  style="background-color:#796a5a;">
+        <div class="container col-10">
+          <h1 class="text-white  text-center align-self-center  m-auto pt-2 pb-2" style="font-size:1.5em;">VOTRE PANIER : <%=produit.length%> produits</h1>
+        </div>
+    </div>
+    <div class="d-flex justify-content-around mt-3">
+            <div>
+        <%for(p of produit){%>
+            <div class="card m-auto" style="max-width: 540px; margin-bottom:2% !important; margin-top:2% !important;">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <img src="..." class="card-img" alt="...">
+                      </div>
+            <div class="d-flex align-items-center ">
+                    <div class="col-md-6">
+                      <div class="card-body col-10 m-0">
+                        <h5 class="card-title">Nom (réf) :<%=p.produits[0].nom_produit%></h5>
+                        <p class="card-text ">Quantité en stock : <%=p.produits[0].stock%></p>
+                      </div>
+                    </div>
+                    <select class="form-control col-4  ">
+                      <option>Toutes les catégories</option>
+                      <option>Catégorie 1</option>
+                      <option>Catégorie 2</option>
+                      <option>Catégorie 3</option>
+                    </select>
+                    <p class="ml-3"><%=p.prix_unitaire * p.quantite%> e</p>
+                    <i class="fas fa-times ml-3 mr-3" style="color:#796a5a;"></i>
+                  </div>
+                </div>
+            </div>
+            <%}%>
+  
+    </div>
+    <div class="card ml-5" style="width: 18rem;max-height:150px;">
+            <div class="card-body">
+              <h5 class="card-title">Montant total des produits</h5>
+              <p class="card-text"><%= %> €</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class=" btn-success pt-2 pb-2 text-center">Passer commande</li>
+            </ul>
+      </div>
+    </div>
+<style>
+    section{
+        width:100%;
+        outline:solid 1px black;
+    }
+    table{
+        width:800px;
+    }
+
+</style>
