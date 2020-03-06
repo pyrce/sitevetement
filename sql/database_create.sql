@@ -7,6 +7,22 @@ CREATE TABLE categories (
 
 INSERT INTO categories VALUES (1,'haut'),(2,'short');
 
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  id integer NOT NULL,
+  nom_client varchar(45) DEFAULT NULL,
+  prenom_client varchar(45) DEFAULT NULL,
+  adresse_livraison varchar(45) DEFAULT NULL,
+  adresse varchar(45) DEFAULT NULL,
+  telephone integer DEFAULT NULL,
+  password varchar(45) DEFAULT NULL,
+  email varchar(45) DEFAULT NULL,
+  role varchar(45) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'pass','mail.fr','client');
+
 DROP TABLE IF EXISTS commentaire;
 CREATE TABLE commentaire (
   id integer NOT NULL,
@@ -56,19 +72,3 @@ CREATE TABLE panier_produit (
   CONSTRAINT fk_produits_has_panier_produits1 FOREIGN KEY (panier_id) REFERENCES panier (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 INSERT INTO panier_produit VALUES (1,1,1),(2,2,2);
-
-DROP TABLE IF EXISTS users;
-CREATE TABLE users (
-  id integer NOT NULL,
-  nom_client varchar(45) DEFAULT NULL,
-  prenom_client varchar(45) DEFAULT NULL,
-  adresse_livraison varchar(45) DEFAULT NULL,
-  adresse varchar(45) DEFAULT NULL,
-  telephone integer DEFAULT NULL,
-  password varchar(45) DEFAULT NULL,
-  email varchar(45) DEFAULT NULL,
-  role varchar(45) DEFAULT NULL,
-  PRIMARY KEY (id)
-);
-
-INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'pass','mail.fr','client');
