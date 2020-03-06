@@ -7,19 +7,6 @@ CREATE TABLE categories (
 
 INSERT INTO categories VALUES (1,'haut'),(2,'short');
 
-
-
-DROP TABLE IF EXISTS panier;
-CREATE TABLE panier (
-  id integer NOT NULL ,
-  quantite integer DEFAULT NULL,
-  prix_unitaire decimal(10,0) DEFAULT NULL,
-  users_id integer NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT fk_panier_users FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ;
-INSERT INTO panier VALUES (1,3,10,1),(2,8,3,1);
-
 DROP TABLE IF EXISTS commentaire;
 CREATE TABLE commentaire (
   id integer NOT NULL,
@@ -47,6 +34,17 @@ CREATE TABLE produits (
 ) ;
 
 INSERT INTO produits VALUES (1,'t shirt',30,'10','t-shirt','rtest','13',1,'tshirt en soie d\"Inde'),(2,'chemise',10,'15','chemise soie',NULL,'18',1,'chemise coton');
+
+DROP TABLE IF EXISTS panier;
+CREATE TABLE panier (
+  id integer NOT NULL ,
+  quantite integer DEFAULT NULL,
+  prix_unitaire decimal(10,0) DEFAULT NULL,
+  users_id integer NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_panier_users FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ;
+INSERT INTO panier VALUES (1,3,10,1),(2,8,3,1);
 
 DROP TABLE IF EXISTS panier_produit;
 
