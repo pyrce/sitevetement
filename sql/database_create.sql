@@ -1,4 +1,5 @@
 drop table if exists panier_produit;
+drop table if exists panier;
 drop table if exists commentaires;
 DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS produits;
@@ -11,7 +12,6 @@ CREATE TABLE categories (
 
 INSERT INTO categories VALUES (1,'haut'),(2,'short');
 
-DROP TABLE IF EXISTS panier;
 CREATE TABLE panier (
   id integer NOT NULL ,
   quantite integer DEFAULT NULL,
