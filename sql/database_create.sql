@@ -33,11 +33,11 @@ CREATE TABLE categories (
 -- Dumping data for table categories
 --
 
-LOCK TABLES categories WRITE;
+
 /*!40000 ALTER TABLE categories DISABLE KEYS */;
 INSERT INTO categories VALUES (1,'haut'),(2,'short');
 /*!40000 ALTER TABLE categories ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 --
 -- Table structure for table commentaire
@@ -62,10 +62,10 @@ CREATE TABLE commentaire (
 -- Dumping data for table commentaire
 --
 
-LOCK TABLES commentaire WRITE;
+
 /*!40000 ALTER TABLE commentaire DISABLE KEYS */;
 /*!40000 ALTER TABLE commentaire ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 --
 -- Table structure for table panier
@@ -89,11 +89,11 @@ CREATE TABLE panier (
 -- Dumping data for table panier
 --
 
-LOCK TABLES panier WRITE;
+
 /*!40000 ALTER TABLE panier DISABLE KEYS */;
 INSERT INTO panier VALUES (1,3,10,1),(2,8,3,1);
 /*!40000 ALTER TABLE panier ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 --
 -- Table structure for table panier_produit
@@ -117,11 +117,11 @@ CREATE TABLE panier_produit (
 -- Dumping data for table panier_produit
 --
 
-LOCK TABLES panier_produit WRITE;
+
 /*!40000 ALTER TABLE panier_produit DISABLE KEYS */;
 INSERT INTO panier_produit VALUES (1,1,1),(2,2,2);
 /*!40000 ALTER TABLE panier_produit ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 --
 -- Table structure for table produits
@@ -150,11 +150,11 @@ CREATE TABLE produits (
 -- Dumping data for table produits
 --
 
-LOCK TABLES produits WRITE;
+
 /*!40000 ALTER TABLE produits DISABLE KEYS */;
-INSERT INTO produits VALUES (1,'t shirt',30,'10','t-shirt','rtest','13',1,'tshirt en soie d\'Inde'),(2,'chemise',10,'15','chemise soie',NULL,'18',1,'chemise coton');
+INSERT INTO produits VALUES (1,'t shirt',30,'10','t-shirt','rtest','13',1,'tshirt en soie d\"Inde'),(2,'chemise',10,'15','chemise soie',NULL,'18',1,'chemise coton');
 /*!40000 ALTER TABLE produits ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 --
 -- Table structure for table users
@@ -181,11 +181,11 @@ CREATE TABLE users (
 -- Dumping data for table users
 --
 
-LOCK TABLES users WRITE;
+
 /*!40000 ALTER TABLE users DISABLE KEYS */;
 INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'pass','mail.fr','client');
 /*!40000 ALTER TABLE users ENABLE KEYS */;
-UNLOCK TABLES;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
