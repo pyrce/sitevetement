@@ -17,20 +17,16 @@ CREATE TABLE commentaire (
   date varchar(45) DEFAULT NULL,
   users_id integer NOT NULL,
   PRIMARY KEY (id),
-  KEY fk_commentaire_users1_idx (users_id),
   CONSTRAINT fk_commentaire_users1 FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ;
 
 DROP TABLE IF EXISTS panier;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE panier (
   id integer NOT NULL ,
   quantite integer DEFAULT NULL,
   prix_unitaire decimal(10,0) DEFAULT NULL,
   users_id integer NOT NULL,
   PRIMARY KEY (id),
-  KEY fk_panier_users_idx (users_id),
   CONSTRAINT fk_panier_users FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ;
 INSERT INTO panier VALUES (1,3,10,1),(2,8,3,1);
@@ -47,7 +43,6 @@ CREATE TABLE produits (
   categories_id integer NOT NULL,
   description varchar(45) DEFAULT NULL,
   PRIMARY KEY (id),
-  KEY fk_produits_categories1_idx (categories_id),
   CONSTRAINT fk_produits_categories1 FOREIGN KEY (categories_id) REFERENCES categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ;
 
@@ -60,7 +55,6 @@ CREATE TABLE panier_produit (
   panier_id integer NOT NULL,
   id integer DEFAULT NULL,
   KEY fk_produits_has_panier_produits1_idx (panier_id),
-  KEY fk_produits_has_panier_panier1 (produits_id),
   CONSTRAINT fk_produits_has_panier_panier1 FOREIGN KEY (produits_id) REFERENCES produits (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_produits_has_panier_produits1 FOREIGN KEY (panier_id) REFERENCES panier (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
