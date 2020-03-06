@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS produits;
+DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
   id integer NOT NULL ,
@@ -63,7 +64,6 @@ CREATE TABLE panier (
 ) ;
 INSERT INTO panier VALUES (1,3,10,1),(2,8,3,1);
 
-DROP TABLE IF EXISTS panier_produit;
 
 CREATE TABLE panier_produit (
   produits_id integer NOT NULL,
