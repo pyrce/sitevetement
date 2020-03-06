@@ -51,11 +51,11 @@ CREATE TABLE commentaire (
   id_produit integer(11) DEFAULT NULL,
   commentaire varchar(128) DEFAULT NULL,
   date varchar(45) DEFAULT NULL,
-  users_id integer(11) NOT NULL,
+  'users_id' integer(11) NOT NULL,
   PRIMARY KEY (id),
-  KEY fk_commentaire_users1_idx (users_id),
+  KEY 'fk_commentaire_users1_idx' (users_id),
   CONSTRAINT fk_commentaire_users1 FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,7 +110,7 @@ CREATE TABLE panier_produit (
   KEY fk_produits_has_panier_panier1 (produits_id),
   CONSTRAINT fk_produits_has_panier_panier1 FOREIGN KEY (produits_id) REFERENCES produits (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_produits_has_panier_produits1 FOREIGN KEY (panier_id) REFERENCES panier (id) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
