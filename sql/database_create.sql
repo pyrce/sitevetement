@@ -35,19 +35,6 @@ CREATE TABLE panier (
 ) ;
 INSERT INTO panier VALUES (1,3,10,1),(2,8,3,1);
 
-DROP TABLE IF EXISTS panier_produit;
-
-CREATE TABLE panier_produit (
-  produits_id integer NOT NULL,
-  panier_id integer NOT NULL,
-  id integer DEFAULT NULL,
-  KEY fk_produits_has_panier_produits1_idx (panier_id),
-  KEY fk_produits_has_panier_panier1 (produits_id),
-  CONSTRAINT fk_produits_has_panier_panier1 FOREIGN KEY (produits_id) REFERENCES produits (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT fk_produits_has_panier_produits1 FOREIGN KEY (panier_id) REFERENCES panier (id) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-INSERT INTO panier_produit VALUES (1,1,1),(2,2,2);
-
 DROP TABLE IF EXISTS produits;
 CREATE TABLE produits (
   id integer NOT NULL ,
@@ -65,6 +52,19 @@ CREATE TABLE produits (
 ) ;
 
 INSERT INTO produits VALUES (1,'t shirt',30,'10','t-shirt','rtest','13',1,'tshirt en soie d\"Inde'),(2,'chemise',10,'15','chemise soie',NULL,'18',1,'chemise coton');
+
+DROP TABLE IF EXISTS panier_produit;
+
+CREATE TABLE panier_produit (
+  produits_id integer NOT NULL,
+  panier_id integer NOT NULL,
+  id integer DEFAULT NULL,
+  KEY fk_produits_has_panier_produits1_idx (panier_id),
+  KEY fk_produits_has_panier_panier1 (produits_id),
+  CONSTRAINT fk_produits_has_panier_panier1 FOREIGN KEY (produits_id) REFERENCES produits (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT fk_produits_has_panier_produits1 FOREIGN KEY (panier_id) REFERENCES panier (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO panier_produit VALUES (1,1,1),(2,2,2);
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
