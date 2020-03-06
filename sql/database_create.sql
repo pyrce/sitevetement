@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
   id integer NOT NULL ,
@@ -34,7 +35,7 @@ CREATE TABLE commentaire (
   CONSTRAINT fk_commentaire_users1 FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ;
 
-DROP TABLE IF EXISTS produits;
+
 CREATE TABLE produits (
   id integer NOT NULL ,
   nom_produit varchar(45) DEFAULT NULL,
