@@ -1,3 +1,4 @@
+drop table if exists panier_produit;
 DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS categories;
