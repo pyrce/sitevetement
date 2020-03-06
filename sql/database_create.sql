@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
-  id integer NOT NULL AUTO_INCREMENT,
+  id integer NOT NULL ,
   nom_categorie varchar(45) DEFAULT NULL,
   PRIMARY KEY (id)
 ) ;
@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS panier;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE panier (
-  id integer NOT NULL AUTO_INCREMENT,
+  id integer NOT NULL ,
   quantite integer DEFAULT NULL,
   prix_unitaire decimal(10,0) DEFAULT NULL,
   users_id integer NOT NULL,
@@ -50,7 +50,7 @@ INSERT INTO panier_produit VALUES (1,1,1),(2,2,2);
 
 DROP TABLE IF EXISTS produits;
 CREATE TABLE produits (
-  id integer NOT NULL AUTO_INCREMENT,
+  id integer NOT NULL ,
   nom_produit varchar(45) DEFAULT NULL,
   stock integer DEFAULT NULL,
   prix_unitaire varchar(10) DEFAULT NULL,
