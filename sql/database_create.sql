@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS categories;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE categories (
-  id integer(11) NOT NULL AUTO_INCREMENT,
+  id integer NOT NULL AUTO_INCREMENT,
   nom_categorie varchar(45) DEFAULT NULL,
   PRIMARY KEY (id)
 ) 
@@ -47,11 +47,11 @@ DROP TABLE IF EXISTS commentaire;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE commentaire (
-  id integer(11) NOT NULL,
-  id_produit integer(11) DEFAULT NULL,
+  id integer NOT NULL,
+  id_produit integer DEFAULT NULL,
   commentaire varchar(128) DEFAULT NULL,
   date varchar(45) DEFAULT NULL,
-  'users_id' integer(11) NOT NULL,
+  'users_id' integer NOT NULL,
   PRIMARY KEY (id),
   KEY 'fk_commentaire_users1_idx' (users_id),
   CONSTRAINT fk_commentaire_users1 FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -75,10 +75,10 @@ DROP TABLE IF EXISTS panier;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE panier (
-  id integer(11) NOT NULL AUTO_INCREMENT,
-  quantite integer(11) DEFAULT NULL,
+  id integer NOT NULL AUTO_INCREMENT,
+  quantite integer DEFAULT NULL,
   prix_unitaire decimal(10,0) DEFAULT NULL,
-  users_id integer(11) NOT NULL,
+  users_id integer NOT NULL,
   PRIMARY KEY (id),
   KEY fk_panier_users_idx (users_id),
   CONSTRAINT fk_panier_users FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -103,9 +103,9 @@ DROP TABLE IF EXISTS panier_produit;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE panier_produit (
-  produits_id integer(11) NOT NULL,
-  panier_id integer(11) NOT NULL,
-  id integer(11) DEFAULT NULL,
+  produits_id integer NOT NULL,
+  panier_id integer NOT NULL,
+  id integer DEFAULT NULL,
   KEY fk_produits_has_panier_produits1_idx (panier_id),
   KEY fk_produits_has_panier_panier1 (produits_id),
   CONSTRAINT fk_produits_has_panier_panier1 FOREIGN KEY (produits_id) REFERENCES produits (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -131,14 +131,14 @@ DROP TABLE IF EXISTS produits;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE produits (
-  id integer(11) NOT NULL AUTO_INCREMENT,
+  id integer NOT NULL AUTO_INCREMENT,
   nom_produit varchar(45) DEFAULT NULL,
-  stock integer(11) DEFAULT NULL,
+  stock integer DEFAULT NULL,
   prix_unitaire varchar(10) DEFAULT NULL,
   designation varchar(45) DEFAULT NULL,
   image_produit varchar(30) DEFAULT NULL,
   montant_ligne varchar(45) DEFAULT NULL,
-  categories_id integer(11) NOT NULL,
+  categories_id integer NOT NULL,
   description varchar(45) DEFAULT NULL,
   PRIMARY KEY (id),
   KEY fk_produits_categories1_idx (categories_id),
@@ -164,12 +164,12 @@ DROP TABLE IF EXISTS users;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE users (
-  id integer(11) NOT NULL,
+  id integer NOT NULL,
   nom_client varchar(45) DEFAULT NULL,
   prenom_client varchar(45) DEFAULT NULL,
   adresse_livraison varchar(45) DEFAULT NULL,
   adresse varchar(45) DEFAULT NULL,
-  telephone integer(11) DEFAULT NULL,
+  telephone integer DEFAULT NULL,
   password varchar(45) DEFAULT NULL,
   email varchar(45) DEFAULT NULL,
   role varchar(45) DEFAULT NULL,
