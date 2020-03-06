@@ -1,4 +1,5 @@
 drop table if exists panier_produit;
+drop table if exists commentaires;
 DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS categories;
@@ -38,7 +39,6 @@ CREATE TABLE users (
 
 INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'pass','mail.fr','client');
 
-DROP TABLE IF EXISTS commentaire;
 CREATE TABLE commentaire (
   id integer NOT NULL,
   id_produit integer DEFAULT NULL,
