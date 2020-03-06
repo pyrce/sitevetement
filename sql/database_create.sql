@@ -1,7 +1,7 @@
 drop table if exists panier_produit;
 drop table if exists panier;
 drop table if exists commentaires;
-DROP TABLE IF EXISTS produits;
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
@@ -23,7 +23,6 @@ CREATE TABLE panier (
 INSERT INTO panier VALUES (1,3,10,1),(2,8,3,1);
 
 
-DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id integer NOT NULL,
   nom_client varchar(45) DEFAULT NULL,
