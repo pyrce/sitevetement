@@ -24,8 +24,9 @@ if (process.env.DATABASE_URL) {
 
 controller.liste=(req,res)=>{
     const pageSize=10;
-    var page= (typeof req.params.page!="undefined") ? req.params.page:0
-    const offset = parseInt(page) * pageSize;
+    console.log(req.params.page)
+    var page= (typeof req.params.page!="undefined" && req.params.page>0) ? req.params.page:0
+    var offset = parseInt(page) * pageSize;
     const limit = pageSize;
     op.findAll({  limit,
         offset})
