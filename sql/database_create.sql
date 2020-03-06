@@ -39,7 +39,7 @@ CREATE TABLE users (
 
 INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'pass','mail.fr','client');
 
-CREATE TABLE commentaire (
+CREATE TABLE commentaires (
   id integer NOT NULL,
   id_produit integer DEFAULT NULL,
   commentaire varchar(128) DEFAULT NULL,
