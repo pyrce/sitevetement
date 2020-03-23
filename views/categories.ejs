@@ -1,0 +1,121 @@
+<%- include ('partials/partials.ejs') %>
+
+      <div class="jumbotron jumbotron-fluid d-flex col-12 p-0  mt-5"  style="background-color:#796a5a;">
+        <div class="container col-10">
+          <h1 class="text-white  text-center align-self-center  m-auto pt-2 pb-2" style="font-size:1.5em;">Gérez les catégories de produits</h1>
+        </div>
+    </div>
+    <form class="text-center" method="post" action="/categories">
+      <div class="form-group d-flex col-8 m-auto">
+        <label for="categorie" class="col-sm-2 col-form-label">Ajouter une catégorie</label>
+    <input class="form-control" type="text" placeholder="Votre nom de catégorie" name="categorie" id="categorie">
+      </div>
+      <div class="col-auto mt-4 mb-2">
+        <button type="submit" class="btn mb-2 text-white" style="background-color:#796a5a;">Ajouter</button>
+      </div>
+  </form>
+ 
+
+
+
+    <table class="table">
+      <thead  class="text-white" style="background-color:#2d2d2d;">
+        <tr>
+          <th scope="col">Nom de la catégorie</th>
+          <th scope="col">Etat</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%for(c of cats){%>
+        <tr>
+          <td><%=c.nom_categorie%></td>
+       <td>  <select name="etat" data-id="<%=c.id%>" class="etat">
+
+            <option value="1" <%if(c.etat==1){%> selected<%}%>>Actif</option>
+            <option value="0" <%if(c.etat==0){%> selected<%}%>>Inactif</option>
+          </select>
+          </td>
+          <td>
+            <i class="fas fa-times" onclick="remove('<%=c.id%>')"></i>
+            <i class="fas fa-edit ml-3" data-nom="<%=c.nom_categorie%>" onclick="update('<%=c.id%>')"></i>
+          </td>
+        </tr>
+<%}%>
+      </tbody>
+    </table>
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <form action="" method="post" id="form">
+<input type="text" value="" name="nom_cat" id="modal_cat" />
+<button type="submit" id="btn" class="btn btn-primary" >Modifier</button>
+          </form>
+        </div>
+      
+      </div>
+      <style>
+        .modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+      </style>
+
+<%- include ('partials/script.ejs')%>
+   <script>
+   function update(id){ 
+nom= event.currentTarget.dataset.nom
+console.log(nom)
+$(".modal").css("display","block");
+$("#modal_cat").val(nom);
+$("#form").attr("action","/categories/"+id);
+   }
+$(".etat").on("change",()=>{
+  id=event.currentTarget.dataset.id
+  val=event.currentTarget.value
+data={}
+data["etat"]=val
+  $.ajax({
+    url:"/categories/"+id,
+    type:"PUT",
+    headers: {"X-HTTP-Method-Override": "PUT"},
+    data:data
+  })
+})
+   var span = document.getElementsByClassName("close")[0];
+   var modal = document.getElementsByClassName("modal")[0];
+span.onclick = function() {
+  modal.style.display = "none";
+}
+function remove(id){
+  console.log(id)
+$.ajax({
+  url:"/categories/"+id,
+  type:"DELETE",
+  success:()=>{
+    location.reload()
+  }
+})
+}
+
+   </script>

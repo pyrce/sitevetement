@@ -10,7 +10,7 @@ CREATE TABLE categories (
   PRIMARY KEY (id)
 ) ;
 
-INSERT INTO categories VALUES (1,'haut'),(2,'short');
+INSERT INTO categories VALUES (1,'haut'),(2,'short'),(3,'chaussures'),(4,'accessoire');
 
 CREATE TABLE panier (
   id integer NOT NULL ,
@@ -36,34 +36,53 @@ CREATE TABLE users (
   PRIMARY KEY (id)
 );
 
-INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'pass','mail.fr','client');
+INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'pass','user@mail.fr','client'),
+(2,'admin','admin','25 avenue tom','14 ch vale',12399,'pass','admin@mail.fr','admin');
 
 CREATE TABLE commentaires (
-  id integer NOT NULL,
-  id_produit integer DEFAULT NULL,
-  commentaire varchar(128) DEFAULT NULL,
-  date varchar(45) DEFAULT NULL,
-  users_id integer NOT NULL,
+  id INT NOT NULL,
+  commentaire VARCHAR(128) NULL,
+  date_commentaire Timestamp NULL,
+  users_id INT NOT NULL,
+  produits_id INT NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT fk_commentaire_users1 FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ;
+  INDEX fk_commentaire_users1_idx (users_id ASC),
+  INDEX fk_commentaire_produits1_idx (produits_id ASC),
+  CONSTRAINT fk_commentaire_users1
+    FOREIGN KEY (users_id)
+    REFERENCES users (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_commentaire_produits1
+    FOREIGN KEY (produits_id)
+    REFERENCES produits (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 
 CREATE TABLE produits (
   id integer NOT NULL ,
   nom_produit varchar(45) DEFAULT NULL,
   stock integer DEFAULT NULL,
-  prix_unitaire varchar(10) DEFAULT NULL,
+  prix_unitaire integer DEFAULT NULL,
   designation varchar(45) DEFAULT NULL,
   image_produit varchar(30) DEFAULT NULL,
-  montant_ligne varchar(45) DEFAULT NULL,
+  montant_ligne integer DEFAULT NULL,
   categories_id integer NOT NULL,
   description varchar(45) DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_produits_categories1 FOREIGN KEY (categories_id) REFERENCES categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ;
 
-INSERT INTO produits VALUES (1,'t shirt',30,'10','t-shirt','rtest','13',1,'tshirt en soie d\"Inde'),(2,'chemise',10,'15','chemise soie',NULL,'18',1,'chemise coton');
+INSERT INTO produits VALUES (1,'t shirt',30,10,'t-shirt','rtest',13,1,'tshirt en soie d\"Inde'),
+(2,'chemise',10,15,'chemise soie',NULL,18,1,'chemise coton');
+
+INSERT INTO produits VALUES (2,'chemise',20,12,'chemise verte',null,17,1,'chemise verte taille l'),
+(3,'polo',40,15,'polo',NULL,18,1,'polo coton xl'),
+(4,'pantalon',22,18,'pantalon',NULL,18,2,'pantalon laine'),
+(5,'bague or',5,180,'bague or',NULL,180,4,'bague or 12 carat'),
+(6,'colier',2,75,'colier',NULL,80,4,'colier perle'),
+(7,'chaussure nike',9,40,'chaussure',NULL,40,3,'chaussure nike 30');
 
 
 CREATE TABLE panier_produit (

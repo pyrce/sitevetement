@@ -1,10 +1,213 @@
-<% include('partials/partials') %>
+<%- include('partials/partials.ejs') %>
+<div class="container" onload="getCommentaires()">
 
-<section>
-<img src="..." alt="">
+    <div class="row">
+      <div class="col-lg-4">
 
-<div id="infos">
+        <div class="card mt-4">
+          <img class="card-img-top img-fluid" src="http://placehold.it/400x400" alt="">
+        </div>
+        <!-- /.card -->
 
-</div>
+      </div>
+      <!-- /.col-lg-4 -->
 
-</section>
+      <div class="col-lg-8">
+
+        <div class="card mt-4">
+          <div class="card-header">
+            <h3><%=produit.nom_produit%></h3>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title" id="prix">$<%=produit.prix_unitaire%></h4>
+            <h4>Stock</h4>
+            <p class="card-text">
+                <%=produit.description%>
+            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+            4.0 stars
+        
+              <div class="form-group col-lg-2">
+                <label for="exampleFormControlSelect1">Quantité</label>
+                <select class="form-control" id="quantite">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <button onclick="addpanier()" class="btn" style="background-color: #796a5a; color: white;">Ajouter au panier</button>
+          </div>
+        <div id="msg"></div>
+          </div>
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <!-- /.col-lg-8 -->
+
+    </div>
+
+    <div class="row" >
+      <div class="col-lg-12">
+
+        <div class="card mt-4">
+          <div class="card-body">
+           
+                <input type="text" value="<%=produit.id%>" id="produit_id" hidden>
+                <input type="text" value="1" id="user_id" hidden>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Commentaire</label>
+                <textarea class="form-control" id="com" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <button  class="btn" onclick="addcom()" style="background-color: #796a5a; color: white;">Laisser un commentaire</button>
+              </div>
+         
+          </div>
+        </div>
+        <!-- /.card -->
+    
+        <div class="card card-outline-secondary my-4">
+          <div class="card-header">
+            Avis sur les produits 
+          </div>
+          <div class="card-body" id="liste_com">
+<%for(c of coms){%>
+            <p> <%=c.commentaire%> </p> 
+            <small class="text-muted">Posted by <%=c.user.nom_client%> on <%=moment(c.date_commentaire).format("DD MMMM YYYY LT")%></small>
+            <%if(c.user.id==user.id){%> <button class="btn btn-primary" data-nom="<%=c.commentaire%>"  onclick="update('<%=c.id%>')">Modifier</button><%}%>
+            <%if(user.role=='admin'){%> <button class="btn btn-warning" onclick="removeCom('<%=c.id%>')">Supprimer</button><%}%>
+            <hr>
+<%}%>
+          </div>
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+
+  </div>
+  <!-- /.container -->
+        <!-- Modal content -->
+        <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <form action="" method="post" id="form" class="d-flex justify-content-center">
+            <input type="text" value="<%=produit.id%>" name="id_prod" hidden>
+<textarea id="text_com" name="comment" style="width:90%;"></textarea>
+<button type="submit" id="butn" class="btn btn-primary">Modifier</button>
+          </form>
+        </div>
+        </div>
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+  <%- include ('partials/script.ejs') %>
+  <style>
+    .modal {
+display: none; /* Hidden by default */
+position: fixed; /* Stay in place */
+z-index: 1; /* Sit on top */
+padding-top: 50px; /* Location of the box */
+left: 0;
+top: 0;
+width: 100%; /* Full width */
+height: 100%; /* Full height */
+overflow: auto; /* Enable scroll if needed */
+background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+background-color: #fefefe;
+margin: auto;
+padding: 20px;
+border: 1px solid #888;
+width: 80%;
+}
+  </style>
+  <script>
+       function update(id){ 
+nom= event.currentTarget.dataset.nom
+console.log(nom)
+$("#text_com").val(nom);
+$(".modal").css("display","block");
+$("#form").attr("action","/commentaires/"+id);
+   }
+   $(".close").on("click",function(){
+    $(".modal").css("display","none");
+   })
+function addcom(){
+data={};
+data["produitid"]=$("#produit_id").val();
+data["userid"]=$("#user_id").val();
+data["com"]=$("#com").val().replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/g, "")
+
+    $.ajax({
+    url:"/commentaires",
+    type:"put",
+    headers: {"X-HTTP-Method-Override": "PUT"},
+    data:data,
+    success:function(){
+$("#com").val()
+     getCommentaires()
+        
+    },
+    error:function(err){
+console.log(err.responseText)
+    }
+})
+}
+function getCommentaires(){
+  var produit={};
+  produit["id"]=$("#produit_id").val();
+  console.log(produit);
+$.ajax({
+  url:"/commentaires", type:"get",headers: {"X-HTTP-Method-Override": "PUT"},data: produit, success:(coms)=>{
+    
+$("#liste_com").html("");
+for(c of coms.coms){
+  t=new Date(c.date_commentaire);
+y = new Intl.DateTimeFormat('fr-FR', { year: 'numeric' }).format(t)
+ m = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(t)
+ d = new Intl.DateTimeFormat('fr-FR', { day: '2-digit' }).format(t)
+
+datecom=`${d} ${m} ${y}`;
+       $("#liste_com").append("<p>"+c.commentaire+"</p><small class='text-muted'>Posted by "+c.user.nom_client+" on "+datecom+"</small><hr>")
+
+}
+
+}
+})
+}
+function removeCom(id){
+$.ajax({
+  url:"/commentaires/"+id,
+  type:"DELETE",
+  success:function(data){
+    getCommentaires()
+  }
+})
+}
+function addpanier(){
+var  data={};
+data["produitid"]=$("#produit_id").val();
+data["userid"]=$("#user_id").val();
+data["quantite"]=$("#quantite").val();
+data["prix"]=$("#prix").html().substr(1);
+$.ajax({
+  url:"/panier",type:"post",data:data,success:()=>{
+$("#msg").html("l'article a bien été ajouté au panier");
+  }
+})
+}
+  </script>

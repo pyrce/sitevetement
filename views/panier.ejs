@@ -8,36 +8,33 @@
     <div class="d-flex justify-content-around mt-3">
             <div>
         <%for(p of produit){%>
-            <div class="card m-auto" style="max-width: 540px; margin-bottom:2% !important; margin-top:2% !important;">
+          <input type="text" data-id="<%=p.id%>" data-user="1" class="panierId" hidden>
+       
+            <div class="card m-auto" style="width: 90%; margin-bottom:2% !important; margin-top:2% !important;">
                     <div class="row no-gutters">
                       <div class="col-md-4">
-                        <img src="..." class="card-img" alt="...">
+                        <img class="card-img-top img-fluid" src="http://placehold.it/400x400" alt="">
                       </div>
-            <div class="d-flex align-items-center ">
+            <div class="d-flex align-items-center justify-content-start">
                     <div class="col-md-6">
-                      <div class="card-body col-10 m-0">
+                      <div class="card-body col-11 m-0">
                         <h5 class="card-title">Nom (réf) :<%=p.produits[0].nom_produit%></h5>
                         <p class="card-text ">Quantité en stock : <%=p.produits[0].stock%></p>
                       </div>
                     </div>
-                    <select class="form-control col-4  ">
-                      <option>Toutes les catégories</option>
-                      <option>Catégorie 1</option>
-                      <option>Catégorie 2</option>
-                      <option>Catégorie 3</option>
-                    </select>
-                    <p class="ml-3"><%=p.prix_unitaire * p.quantite%> e</p>
-                    <i class="fas fa-times ml-3 mr-3" style="color:#796a5a;"></i>
+        <input type="number" value="<%=p.quantite%>" data-id="<%=p.id%>" onchange="updateqte('<%=p.id%>')">
+                    
+                    <i class="fas fa-times ml-3 mr-3" onclick="remove('<%=p.id%>')" style="color:#796a5a;"></i>
                   </div>
                 </div>
             </div>
             <%}%>
   
     </div>
-    <div class="card ml-5" style="width: 18rem;max-height:150px;">
+    <div class="card ml-5" style="width: 18rem;max-height:150px;" id="montant">
             <div class="card-body">
               <h5 class="card-title">Montant total des produits</h5>
-              <p class="card-text"><%= %> €</p>
+              <p class="card-text"><%= some %> €</p>
             </div>
             <ul class="list-group list-group-flush">
               <li class=" btn-success pt-2 pb-2 text-center">Passer commande</li>
@@ -54,3 +51,37 @@
     }
 
 </style>
+<%- include ('partials/script.ejs') %>
+
+<script>
+function updateqte(id){
+  
+  data={};
+data["userid"]=$("input[data-id="+id+"]").data("user");
+data["qte"]=event.currentTarget.value
+$.ajax({
+  url:"/panier/"+id,
+  type:"put",
+    headers: {"X-HTTP-Method-Override": "PUT"},
+    data:data,
+    success:(rep)=>{
+      $("#montant").load(" #montant > *")
+      console.log(rep)
+    }
+})
+}
+function remove(id){
+  console.log("remove funnction")
+  data={}
+  data["userid"]=$("input[data-id="+id+"]").data("user");
+$.ajax({
+  url:"/panier/"+id,
+  type:"delete",
+  data:data,
+  success:()=>{
+    location.reload()
+  }
+})
+
+}
+</script>

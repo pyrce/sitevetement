@@ -1,25 +1,45 @@
-const express = require('express');
-      // path = require('path'),
+const express = require('express'),
+       path = require('path');
       // morgan = require('morgan'),
 const ejs=require('ejs');
 const bodyParser = require('body-parser');
-
+var session = require('express-session');
 const app = express();
-
+var cookieParser = require('cookie-parser');
+var flash = require('connect-flash');
 app.use(bodyParser());
 
 // importing routes
-const operationRoutes = require("./route/siteRoutes");
+
 const panierRoutes = require('./route/panierRoute');
+var passport = require('passport');
+
+const comRoutes = require('./route/comRoutes');
 // settings
 app.set('port', process.env.PORT || 3000);
 // app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, 'public')));
 
 
-// routes
+//require('./config/passport')(passport); // pass passport for configuration
+
+
+//require('./route/siteRoutes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+app.use(session({cookie: { maxAge: 60000 }, 
+  secret: 'I Love India...',
+  resave: false,
+  saveUninitialized: false
+}));/*
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(flash()); // use connect-flash for flash messages stored in session
+// routes*/
+const operationRoutes = require("./route/siteRoutes");
 app.use('/', operationRoutes);
-app.use('/panier', panierRoutes);
 // starting the server
 app.listen(app.get('port'), () => {
   console.log(app.get("host"))

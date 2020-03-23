@@ -10,9 +10,16 @@
           <h1 class="display-5 text-white mt-5 ml-5 text-center">VETEMENTS ET BIJOUX ONLINE</h1>
           <p class="lead">Achetez les plus beaux vêtements et bijoux.</p>
         </div>
+
+<%if(typeof user!="undefined" ){%>
         <div class="container  d-flex col-1 p-0 mb-0" style="background-color:#525050;" >
-            <div class="align-self-center  m-auto "><i class="fas fa-user-alt" style="font-size:2em;"></i></div>
+            <div class="align-self-center  m-auto "><a href="/deconnection"><i class="fas fa-user-alt" style="font-size:2em;"></i></a></div>
         </div>
+<%}else{%>
+  <div class="container  d-flex col-1 p-0 mb-0" style="background-color:#525050;" >
+      <div class="align-self-center  m-auto "><i class="fas fa-user-alt" style="font-size:2em;"></i></div>
+  </div>
+  <%}%>
         <div class="container d-flex col-1 p-0 mb-0" style="background-color:#796a5a;" >
             <div class="align-self-center  m-auto "><a href="/panier"> <i class="fas fa-shopping-cart" style="font-size:2em;""></i></a></div>
         </div>
@@ -29,14 +36,16 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
       </li>
+<%if(typeof user!="undefined" && user.role=="admin"){%>
       <li class="nav-item">
         <a class="nav-link" href="#">Gérer produits</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Gérer catégories</a>
+        <a class="nav-link" href="/categories">Gérer catégories</a>
       </li>
-     
+<%}%>
     </ul>
- 
+ <a href="/connect/1" class="btn btn-primary">Connecter user</a> 
+ <a href="/connect/2" class="btn btn-primary">Connecter admin</a>
   </div>
       </nav>
