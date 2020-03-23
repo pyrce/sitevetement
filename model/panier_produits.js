@@ -26,7 +26,7 @@ const panier_produit = sequelize.define('panier_produit', {
     },
         produitId:{field:"produits_id",references:"produits",type:Sequelize.INTEGER},
         panierId:{field:"panier_id",references:"panier",type:Sequelize.INTEGER},
-},{tableName:"panier_produit",timestamps: false});
+},{tableName:"panier_produits",timestamps: false});
 
 var exports = module.exports = {};
 exports.panier_produit = panier_produit;

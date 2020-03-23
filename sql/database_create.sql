@@ -1,4 +1,4 @@
-drop table if exists panier_produit;
+drop table if exists panier_produits;
 drop table if exists panier CASCADE;
 drop table if exists commentaires;
 DROP TABLE IF EXISTS users CASCADE;
@@ -81,12 +81,12 @@ CREATE TABLE commentaires (
     ON UPDATE NO ACTION);
 
 create sequence panier_seq;
-CREATE TABLE panier_produit (
+CREATE TABLE panier_produits (
   produits_id integer NOT NULL,
   panier_id integer NOT NULL,
-  id integer DEFAULT NULL nextval('panier_seq'),
+  id integer NOT NULL DEFAULT nextval('panier_seq'),
 PRIMARY KEY (id),
   CONSTRAINT fk_produits_has_panier_panier1 FOREIGN KEY (produits_id) REFERENCES produits (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_produits_has_panier_produits1 FOREIGN KEY (panier_id) REFERENCES panier (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-INSERT INTO panier_produit VALUES (1,1,1),(2,2,2);
+INSERT INTO panier_produits VALUES (1,1,1),(2,2,2);
