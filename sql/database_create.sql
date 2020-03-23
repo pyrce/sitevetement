@@ -1,8 +1,8 @@
-drop table if exists panier_produit;
-drop table if exists panier;
-drop table if exists commentaires;
+drop table if exists panier_produit CASCADE CONSTRAINTS;
+drop table if exists panier CASCADE CONSTRAINTS;
+drop table if exists commentaires CASCADE CONSTRAINTS;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS produits;
+DROP TABLE IF EXISTS produits CASCADE CONSTRAINTS;
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
   id integer NOT NULL ,
