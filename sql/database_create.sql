@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS produits CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
 CREATE TABLE categories (
-  id integer NOT NULL ,
+  id integer NOT NULL  AUTO_INCREMENT,
   nom_categorie varchar(45) DEFAULT NULL,
   etat integer,
   PRIMARY KEY (id)
@@ -14,7 +14,7 @@ CREATE TABLE categories (
 INSERT INTO categories VALUES (1,'haut',1),(2,'short',1),(3,'chaussures',1),(4,'accessoire',1);
 
 CREATE TABLE users (
-  id integer NOT NULL,
+  id integer NOT NULL AUTO_INCREMENT,
   nom_client varchar(45) DEFAULT NULL,
   prenom_client varchar(45) DEFAULT NULL,
   adresse_livraison varchar(45) DEFAULT NULL,
@@ -30,7 +30,7 @@ INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'pass','
 (2,'admin','admin','25 avenue tom','14 ch vale',12399,'pass','admin@mail.fr','admin');
 
 CREATE TABLE panier (
-  id integer NOT NULL ,
+  id integer NOT NULL AUTO_INCREMENT,
   quantite integer DEFAULT NULL,
   prix_unitaire decimal(10,0) DEFAULT NULL,
   users_id integer NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE panier (
 ) ;
 INSERT INTO panier VALUES (1,3,10,1),(2,8,3,1);
 CREATE TABLE produits (
-  id integer NOT NULL ,
+  id integer NOT NULL AUTO_INCREMENT ,
   nom_produit varchar(45) DEFAULT NULL,
   stock integer DEFAULT NULL,
   prix_unitaire integer DEFAULT NULL,
@@ -63,7 +63,7 @@ INSERT INTO produits VALUES (3,'chemise',20,12,'chemise verte',null,17,1,'chemis
 (8,'chaussure nike',9,40,'chaussure',NULL,40,3,'chaussure nike 30');
 
 CREATE TABLE commentaires (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   commentaire VARCHAR(128) NULL,
   date_commentaire Timestamp NULL,
   users_id INT NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE commentaires (
 CREATE TABLE panier_produit (
   produits_id integer NOT NULL,
   panier_id integer NOT NULL,
-  id integer DEFAULT NULL,
+  id integer DEFAULT NULL AUTO_INCREMENT,
   CONSTRAINT fk_produits_has_panier_panier1 FOREIGN KEY (produits_id) REFERENCES produits (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_produits_has_panier_produits1 FOREIGN KEY (panier_id) REFERENCES panier (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
