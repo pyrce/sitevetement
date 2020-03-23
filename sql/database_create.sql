@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
   id integer NOT NULL ,
   nom_categorie varchar(45) DEFAULT NULL,
+  etat integer,
   PRIMARY KEY (id)
 ) ;
 
