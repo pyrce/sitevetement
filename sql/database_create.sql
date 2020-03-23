@@ -11,7 +11,7 @@ CREATE TABLE categories (
   PRIMARY KEY (id)
 ) ;
 
-INSERT INTO categories VALUES (1,'haut'),(2,'short'),(3,'chaussures'),(4,'accessoire');
+INSERT INTO categories VALUES (1,'haut',1),(2,'short',1),(3,'chaussures',1),(4,'accessoire',1);
 
 CREATE TABLE panier (
   id integer NOT NULL ,
