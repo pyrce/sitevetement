@@ -47,7 +47,7 @@ controller.liste = (req, res) => {
     const pageSize = 10;
     //console.log( req.session.user)
     var page = (typeof req.params.page != "undefined" && req.params.page > 0) ? req.params.page : 0
-    var offset = parseInt(page) * pageSize;// calcul combien de ligne on ignore
+    var offset = parseInt(page) * pageSize;// calcul le nombre de ligne ignoré
     const limit = pageSize;
     var catid = typeof req.body.cat_id != "undefined" ? req.body.cat_id : ''
 
@@ -116,7 +116,8 @@ controller.listeproduits = (req, res) => {
         prices.push(req.body.prixmax)
     }
 
-
+//si le tableau contient 1 élément on cherche tous les prodduits dont le prix est supperieur
+//sinon on cherche ce qui sont compris entre
     wherestmt["prix_unitaire"] = prices.length > 1 ? {
         [seq.between]: prices
     } : {
