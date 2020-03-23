@@ -69,8 +69,8 @@ CREATE TABLE commentaires (
   users_id INT NOT NULL,
   produits_id INT NOT NULL,
   PRIMARY KEY (id),
-  INDEX fk_commentaire_users1_idx (users_id ASC),
-  INDEX fk_commentaire_produits1_idx (produits_id ASC),
+  INDEX fk_commentaire_users1_idx (users_id ),
+  INDEX fk_commentaire_produits1_idx (produits_id ),
   CONSTRAINT fk_commentaire_users1
     FOREIGN KEY (users_id)
     REFERENCES users (id)
