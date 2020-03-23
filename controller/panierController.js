@@ -70,10 +70,16 @@ var produitid=req.body.produitid;
       }
     ).then(result =>{
       res.sendStatus(200);
-    })
+    }).catch(function(err) {
+      // print the error details
+      console.log(err);
+  });
   })
 
-})
+}).catch(function(err) {
+  // print the error details
+  console.log(err);
+});
 }
 /**Modifie la quantité du produit dans la panier de l'utilisateur 
   * @param req requete utilisateur. Contient id utilisateur et id pannier envoyer en ajax
