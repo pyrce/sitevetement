@@ -100,8 +100,8 @@ $("#categories").on("change",()=>{
     type:"post",
     data:data,
     success:(datas)=>{
-      console.log(datas)
-     
+ 
+ 
       drawproduits(datas)
     }
   })
@@ -117,8 +117,9 @@ $("input:text").on("input",()=>{
     type:"post",
     data:data,
     success:(datas)=>{
-      console.log(datas)
+
       drawproduits(datas)
+   
     }
   })
 })

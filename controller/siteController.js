@@ -1,7 +1,7 @@
 controller = {}
 const produitsModel = require('../model/produits');
 const com = require("../model/commentaires").commentaires;
-const comenntsusers=require("../model/comments_users").comment_user;
+
 const users = require("../model/users").users;
 const moment = require("moment")
 var Sequelize = require('sequelize');
@@ -27,14 +27,14 @@ if (process.env.DATABASE_URL) {
 
     });
 }
-users.belongsToMany(com,{through:{model:comenntsusers}})
-  com.belongsToMany(users,{through:{model:comenntsusers}})
+users.hasMany(com);
+com.belongsTo(users);
 moment.locale('fr');
-cat.hasMany(produits)
-produits.belongsTo(cat)
+cat.hasMany(produits);
+produits.belongsTo(cat);
 
 
-user_id = 1;
+
 /**Affiche la page avec la liste des produits et une zone de recherche par prix et categories.
  * Affichage des produits par un systeme de pagination.
   * @param req requete utilisateur
@@ -149,23 +149,26 @@ controller.listeproduits = (req, res) => {
  * @version 1.0
  */
 controller.detail = (req, res) => {
+    if (typeof req.session.user == "undefined"){
+    req.session.user = {
+        id: 1,
+        nom_client: "tom"
+    }
+
+}
     produits.findOne({
         where: {
-            id: req.params.id
+            id: { [seq.eq]:req.params.id}
         }
     }).then((produit) => {
-
+console.log(req.params.id)
         com.findAll({include:[{model:users}]},{
-            where: {
-                produitId: req.params.id
-            },
-            include: [{
-                model: users
-            }]
-        }).then((coms) => {
-             //res.send(coms)
+          where:{
+                produitId:{[seq.eq]:req.params.id}
+            } }).then((coms) => {
+            // res.send(coms)
             users.findOne({
-                id: 1
+             where:{ id: {[seq.eq]:req.session.user.id}}
             }).then(user => {
                 res.render("detail", {
                     produit: produit,

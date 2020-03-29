@@ -68,7 +68,10 @@ CREATE TABLE commentaires (
   commentaire VARCHAR(128) NULL,
   date_commentaire Timestamp NULL,
   produits_id INT NOT NULL,
+  users_id INT NOT NULL,
   PRIMARY KEY (id),
+  constraint fk_users foreign key (users_id) references users (id)   ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT fk_commentaire_produits1
     FOREIGN KEY (produits_id)
     REFERENCES produits (id)
@@ -85,13 +88,3 @@ PRIMARY KEY (id),
   CONSTRAINT fk_produits_has_panier_produits1 FOREIGN KEY (panier_id) REFERENCES panier (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 INSERT INTO panier_produits VALUES (1,1,1),(2,2,2);
-
-create sequence comments_users_seq;
-CREATE TABLE comments_users (
-  users_id integer NOT NULL,
-  comments_id integer NOT NULL,
-  id integer NOT NULL DEFAULT nextval('comments_users_seq'),
-PRIMARY KEY (id),
-  CONSTRAINT fk_panier_produits1 FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT fk_panier_produits2 FOREIGN KEY (comments_id) REFERENCES commentaires (id) ON DELETE NO ACTION ON UPDATE NO ACTION
-);

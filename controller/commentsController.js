@@ -1,7 +1,6 @@
 controller={}
 const users=require('../model/users').users;
 const produits=require('../model/produits').produits;
-const comenntsusers=require("../model/comments_users").comment_user;
 var Sequelize = require('sequelize');
 var sql = require("mysql2");
 var moment=require('moment');
@@ -23,15 +22,15 @@ if (process.env.DATABASE_URL) {
       
       });
   }
-  users.belongsToMany(com,{through:{model:comenntsusers}})
-  com.belongsToMany(users,{through:{model:comenntsusers}})
+  users.hasMany(com);
+  com.belongsTo(users);
 /** Renvoie la liste des commentaires d'un produit
  * @param req requete utilisateur
  * @param res reponnse serveur
 */
 controller.liste=(req,res)=>{
 
-  com.findAll({where:{produits_id:req.query.id}, include:[{model:users}]}).then((coms)=>{
+  com.findAll({where:{produitId:req.query.id}, include:[{model:users}]}).then((coms)=>{
     res.send({coms:coms,moment:moment});
   })
 }
@@ -54,19 +53,11 @@ var date=new Date();
 com.create({
     produitId:req.body.produitid,
     commentaire:req.body.com,
-    date_commentaire:date   
+    date_commentaire:date ,
+    userId:req.body.userid
 }).then( ()=>{
 
-  com.findAll({limit:1,order:[["id","DESC"]]}).then(current=>{ 
-    console.log(req.body.userid)
-comenntsusers.create({
-  commentaireId:current[0].id,userId:usersid
-}).then(()=>{
   res.sendStatus(200);
-})
-
-  })
-
 })
    
 

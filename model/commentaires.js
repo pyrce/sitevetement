@@ -26,7 +26,8 @@ const commentaires = sequelize.define('commentaires', {
     },
         commentaire:Sequelize.STRING(30),
         date_commentaire:{type:Sequelize.DATE },
-        produitId:{field:"produits_id",type:Sequelize.INTEGER},
+        userId:{field:"users_id",references:"users",type:Sequelize.INTEGER},
+        produitId:{field:"produits_id",references:"produits",type:Sequelize.INTEGER},
 },{tableName:"commentaires",timestamps:false});
 
 var exports = module.exports = {};
