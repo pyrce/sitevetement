@@ -174,7 +174,7 @@ $.ajax({
   url:"/commentaires/"+id,
   type:"DELETE",
   success:function(data){
-    getCommentaires()
+    $("#liste_com").load(" #liste_com > *")
   }
 })
 }

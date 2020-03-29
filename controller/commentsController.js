@@ -39,7 +39,8 @@ controller.liste=(req,res)=>{
  * @param res reponnse serveur
  */
 controller.removeCom=(req,res) => {
-  com.destroy({where:{id:req.query.id}}).then((com)=>{
+  console.log(req.query.id)
+  com.destroy({where:{id:req.params.id}}).then((com)=>{
     res.sendStatus(200)
   })
 }
