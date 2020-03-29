@@ -39,7 +39,7 @@ where  produits_id=3
 and  user_id=3
 
 --tous les commentaires d'un produits
-select * from commentaires where id = 10
+select * from commentaires where produits_id = 10
 
 --maj commentaires
 update commentaires set commentaires ='new com'

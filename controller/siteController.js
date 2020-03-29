@@ -22,7 +22,7 @@ if (process.env.DATABASE_URL) {
         protocol: 'mysql',
         // disable logging; default: console.log
         logging: true,
-        logging: (str) => {}
+        logging: console.log
 
     });
 }
@@ -123,17 +123,17 @@ controller.listeproduits = (req, res) => {
     } : {
         [seq.gte]: prices[0]
     }
-
+//console.log(wherestmt);
     produits.findAll({
             where: wherestmt
 
         }, {
             limit,
             offset
-        }
+        },
         )
         .then((data) => {
-            // console.log(data[0])
+           //  console.log(data[0])
 
             res.send(data);
 

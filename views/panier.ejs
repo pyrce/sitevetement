@@ -5,8 +5,8 @@
           <h1 class="text-white  text-center align-self-center  m-auto pt-2 pb-2" style="font-size:1.5em;">VOTRE PANIER : <%=produit.length%> produits</h1>
         </div>
     </div>
-    <div class="d-flex justify-content-around mt-3">
-            <div>
+    <div class="d-flex flex-lg-row flex-sm-column-reverse justify-content-sm-center justify-content-lg-around flex-wrap-reverse flex-sm-wrap">
+            <div class="d-flex flex-column">
         <%for(p of produit){%>
           <input type="text" data-id="<%=p.id%>" data-user="1" class="panierId" hidden>
        

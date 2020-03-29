@@ -39,7 +39,7 @@ if(req.session.user){
       
       include:[
 {model:produit}
-    ],where:{"users_id":req.session.user.id}}).then((data)=>{
+    ],where:{users_id:req.session.user.id}}).then((data)=>{
 //res.send(data)
 some=0;
 for(p of data){

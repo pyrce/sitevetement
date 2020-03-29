@@ -86,7 +86,7 @@
    function update(id){ 
 nom= event.currentTarget.dataset.nom
 console.log(nom)
-$(".modal").css("display","block");
+$(".modal").css({"display":"flex","justify-items":"center"});
 $("#modal_cat").val(nom);
 $("#form").attr("action","/categories/"+id);
    }

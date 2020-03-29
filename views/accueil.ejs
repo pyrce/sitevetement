@@ -1,5 +1,5 @@
 <%- include ('partials/partials.ejs') %>
-   
+<div class="container-fluid">
   <div class="d-flex flex-column flex-sm-row w-75 justify-content-around">
         <select class="form-control col-lg-2 mt-5 ml-5" id="categories">
           <option value="">Toutes les catégories</option>
@@ -33,9 +33,10 @@
           
           </ul>
         </nav>
+       
         <div class="d-flex flex-column mt-5" id="produits">
           <div id="msg"></div>
-          <div class="d-flex flex-row">
+          <div class="d-flex flex-row flex-wrap " id="liste">
        <%   for(p of product){ %>
           <div class="card shadow" style="width: 18rem;margin-right: 10px;">
             <h5 class="card-title m-auto"><%=p.nom_produit%></h5>
@@ -53,8 +54,12 @@
         <%}%>
         </div>
       </div>
-      
-
+      </div>
+<style>
+#liste div{
+  margin:10px 10px;
+}
+</style>
 <%- include ('partials/script.ejs') %>
 <script>
     function remove(){
@@ -118,7 +123,7 @@ $("input:text").on("input",()=>{
   })
 })
 function drawproduits(datas){
-  $("#produits").html("")
+  $("#liste").html("")
 for(data of datas){ pro=" <div class='card shadow' style='width: 18rem;margin-right: 10px;'>"+
         "  <h5 class='card-title m-auto'>"+data.nom_produit+"</h5>"+
           
@@ -132,7 +137,7 @@ for(data of datas){ pro=" <div class='card shadow' style='width: 18rem;margin-ri
         "  </div>"+
           
      " </div>"
-     $("#produits").append(pro)
+     $("#liste").append(pro)
            }
            console.log(datas.length)
            var pages=Math.ceil(datas.length/10)
