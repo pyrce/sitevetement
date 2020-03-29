@@ -34,6 +34,11 @@ if (process.env.DATABASE_URL) {
  * @param res reponnse serveur 
  */
 controller.liste=(req,res) => {
+  if (typeof req.session.user == "undefined"){
+    req.session.user = {
+        id: 1,
+        nom_client: "tom"
+    }
 if(req.session.user){
     panier.findAll({
       
