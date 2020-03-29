@@ -39,6 +39,7 @@ controller.liste=(req,res) => {
         id: 1,
         nom_client: "tom"
     }
+  }
 if(req.session.user){
     panier.findAll({
       
