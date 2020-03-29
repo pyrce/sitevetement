@@ -1,6 +1,4 @@
 var Sequelize = require('sequelize');
-//const sequelize=new Sequelize({dialect:"mysql"});
-//db=(typeof process.env.DB_DATABASE!="undfined") ? process.env.DB_CONNECTION+"://"+process.env.DB_USER+":"+process.env.DB_PASSWORD+"@"+process.env.DB_HOST+":"+process.env.DB_PORT+"/"+process.env.DB_DATABASE :"mysql://root:root@localhost:3306/vetement"
 var sequelize;
 if (process.env.DATABASE_URL) {
     // the application is executed on Heroku ... use the postgres database
@@ -17,17 +15,16 @@ if (process.env.DATABASE_URL) {
       
       });
   }
-const commentaires = sequelize.define('commentaires', {
+const comment_user = sequelize.define('comments_users', {
     id:{
         type:Sequelize.INTEGER,
         allowNull:false,
         autoIncrement:true,
         primaryKey:true
     },
-        commentaire:Sequelize.STRING(30),
-        date_commentaire:{type:Sequelize.DATE },
-        produitId:{field:"produits_id",type:Sequelize.INTEGER},
-},{tableName:"commentaires",timestamps:false});
+    commentaireId:{field:"commentaire_id",references:"commentaires",type:Sequelize.INTEGER},
+        userId:{field:"users_id",references:"users",type:Sequelize.INTEGER},
+},{tableName:"comments_users",timestamps: false});
 
 var exports = module.exports = {};
-exports.commentaires = commentaires;
+exports.comment_user = comment_user;

@@ -1,6 +1,7 @@
 controller = {}
 const produitsModel = require('../model/produits');
 const com = require("../model/commentaires").commentaires;
+const comenntsusers=require("../model/comments_users").comment_user;
 const users = require("../model/users").users;
 const moment = require("moment")
 var Sequelize = require('sequelize');
@@ -26,11 +27,13 @@ if (process.env.DATABASE_URL) {
 
     });
 }
-users.hasMany(com);
-com.belongsTo(users);
+users.belongsToMany(com,{through:{model:comenntsusers}})
+  com.belongsToMany(users,{through:{model:comenntsusers}})
 moment.locale('fr');
 cat.hasMany(produits)
 produits.belongsTo(cat)
+
+
 user_id = 1;
 /**Affiche la page avec la liste des produits et une zone de recherche par prix et categories.
  * Affichage des produits par un systeme de pagination.
@@ -152,7 +155,7 @@ controller.detail = (req, res) => {
         }
     }).then((produit) => {
 
-        com.findAll({
+        com.findAll({include:[{model:users}]},{
             where: {
                 produitId: req.params.id
             },
@@ -160,15 +163,15 @@ controller.detail = (req, res) => {
                 model: users
             }]
         }).then((coms) => {
-            // res.send(coms)
+             //res.send(coms)
             users.findOne({
-                id: user_id
+                id: 1
             }).then(user => {
                 res.render("detail", {
                     produit: produit,
                     coms: coms,
                     moment: moment,
-                    user: req.session.user
+                    user: user
                 });
             })
         })

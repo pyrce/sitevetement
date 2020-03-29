@@ -76,8 +76,8 @@
           <div class="card-body" id="liste_com">
 <%for(c of coms){%>
             <p> <%=c.commentaire%> </p> 
-            <small class="text-muted">Posted by <%=c.user.nom_client%> on <%=moment(c.date_commentaire).format("DD MMMM YYYY LT")%></small>
-            <%if(c.user.id==user.id){%> <button class="btn btn-primary" data-nom="<%=c.commentaire%>"  onclick="update('<%=c.id%>')">Modifier</button><%}%>
+            <small class="text-muted">Posted by <%=c.users[0].nom_client%> on <%=moment(c.date_commentaire).format("DD MMMM YYYY LT")%></small>
+            <%if(c.users[0].id==user.id){%> <button class="btn btn-primary" data-nom="<%=c.commentaire%>"  onclick="update('<%=c.id%>')">Modifier</button><%}%>
             <%if(user.role=='admin'){%> <button class="btn btn-warning" onclick="removeCom('<%=c.id%>')">Supprimer</button><%}%>
             <hr>
 <%}%>
@@ -182,7 +182,7 @@ y = new Intl.DateTimeFormat('fr-FR', { year: 'numeric' }).format(t)
  d = new Intl.DateTimeFormat('fr-FR', { day: '2-digit' }).format(t)
 
 datecom=`${d} ${m} ${y}`;
-       $("#liste_com").append("<p>"+c.commentaire+"</p><small class='text-muted'>Posted by "+c.user.nom_client+" on "+datecom+"</small><hr>")
+       $("#liste_com").append("<p>"+c.commentaire+"</p><small class='text-muted'>Posted by "+c.users[0].nom_client+" on "+datecom+"</small><hr>")
 
 }
 
