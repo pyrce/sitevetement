@@ -14,7 +14,7 @@ if (process.env.DATABASE_URL) {
       protocol: 'postgres'
     })
   }else{
-     sequelize = new Sequelize("mysql://root:root@localhost:8889/vetement",{
+     sequelize = new Sequelize("mysql://root:@localhost:3306/vetement",{
         dialect:  'mysql',
         protocol: 'mysql',
         // disable logging; default: console.log
@@ -31,6 +31,7 @@ if (process.env.DATABASE_URL) {
 controller.liste=(req,res)=>{
 
   com.findAll({where:{produitId:req.query.id}, include:[{model:users}]}).then((coms)=>{
+    /*req.session.user=user */
     res.send({coms:coms,moment:moment});
   })
 }
@@ -41,6 +42,7 @@ controller.liste=(req,res)=>{
 controller.removeCom=(req,res) => {
   console.log(req.query.id)
   com.destroy({where:{id:req.params.id}}).then((com)=>{
+    /*req.session.user=user */
     res.sendStatus(200)
   })
 }
@@ -57,6 +59,7 @@ com.create({
     date_commentaire:date ,
     userId:req.body.userid
 }).then( ()=>{
+  /*req.session.user=user */
 
   res.sendStatus(200);
 })
@@ -70,9 +73,11 @@ com.create({
 controller.update=(req,res)=>{
 
   com.findOne({where:{id:req.params.id}}).then( (current_com)=>{
+    /*req.session.user=user */
     current_com.update({
       commentaire:req.body.comment
     }).then(()=>{
+      /*req.session.user=user */
       console.log("update reussi")
        res.redirect("/produits/"+req.body.id_prod)
   })

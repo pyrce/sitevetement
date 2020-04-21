@@ -9,7 +9,7 @@ if (process.env.DATABASE_URL) {
       protocol: 'postgres'
     })
   }else{
-     sequelize = new Sequelize("mysql://root:root@localhost:8889/vetement",{
+     sequelize = new Sequelize("mysql://root:@localhost:3306/vetement",{
         dialect:  'mysql',
         protocol: 'mysql',
         // disable logging; default: console.log

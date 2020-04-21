@@ -30,20 +30,18 @@ router.post("/panier", panierController.ajout);
 router.put("/panier/:id",panierController.update);
 router.delete("/panier/:id",panierController.delete);
 
-router.get("/", operationController.liste);
-router.get("/:page", operationController.liste);
-
+router.get("/produits/gerer", operationController.gerer);
 router.get("/produits/ajout", operationController.ajout);
 router.get("/produits/:id", operationController.detail);
 router.post("/",operationController.listeproduits)
 router.post("/produits/add",operationController.add)
 router.get("/produits/modifier/:id",operationController.modifier)
-router.put("/produits/:id",operationController.update)
+router.post("/produits/:id",operationController.update)
 router.delete("/produits/:id",operationController.delete)
 
 router.get("/connect/:id",userController.connect)
 router.get("/deconnection",userController.deconnection)
-
+//router.get("/login",userController.login)
 //ifreturn router;
 //}
 module.exports = router;

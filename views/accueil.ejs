@@ -8,12 +8,12 @@
   <%}%>
         </select>
   
-        <div class="col-lg-6 mt-5">
-          <div class="form-group col-sm-3 col-lg-4">
+        <div class=" col-lg-6 mt-5">
+          <div class="form-group col-8 col-sm-9 col-lg-4">
             <label for="prixmin">Prix min.</label>
             <input class="form-control" type="text" placeholder="Prix minimum" id="prixmin">
           </div>
-          <div class="form-group col-sm-3 col-lg-4">
+          <div class="form-group col-8 col-sm-9 col-lg-4">
             <label for="prixmax">Prix max.</label>
             <input class="form-control" type="text" placeholder="Prix maximum" id="prixmax">
           </div>
@@ -35,7 +35,7 @@
         </nav>
        Total <%= total%>
         <div class="d-flex flex-column mt-5" id="produits">
-          <div id="msg"></div>
+          <div class="msg m-auto" style="margin-bottom:2vh !important"></div>
           <div class="d-flex flex-row flex-wrap " id="liste">
        <%   for(p of product){ %>
           <div class="card shadow" style="width: 18rem;margin-right: 10px;">
@@ -47,19 +47,83 @@
               <p class="card-text"><%=p.description%></p>
               <div class="d-flex justify-content-between"><p><%=p.prix_unitaire%> €</p>
                 <a type="button" href="/produits/<%=p.id%>" class="btn" style="background-color:#796a5a;"><i class="fas fa-search text-white"></i></a>
+<<<<<<< HEAD
               <button onclick="addpanier('<%=p.id%>')" type="button" data-id="<%=p.id%>" data-prix="<%=p.prix_unitaire%>" class="btn" style="background-color:#796a5a;"><i class="fas fa-cart-plus text-white"></i></button></div>
+=======
+              <button onclick="addpanier('<%=p.id%>')" type="button" data-prix="<%=p.prix_unitaire%>" class="btn" style="background-color:#796a5a;"><i class="fas fa-cart-plus text-white"></i></button></div>
+>>>>>>> d268b8f19937921145ab2a35c32c95ec6022bb41
             </div>
             
         </div>
         <%}%>
-        </div>
+        </div> <nav aria-label="...">
+        <ul class="pagination pagination-lg mt-5 ml-5" id="pages">
+          <%for(i=1;i<=Math.ceil(total/10);i++){%>
+            <li class="page-item"><a class="page-link"  href="/<%=i%>" style="color:#212529;"><%=i%></a></li>
+            <%}%>
+        
+        </ul>
+      </nav>
+        <div class="msg m-auto" style="margin-bottom:2vh !important"></div>
       </div>
+     
       </div>
 <style>
 #liste div{
   margin:10px 10px;
 }
+/* 
+@keyframes magie {
+    0% {
+        opacity:0;
+      
+    }
+
+    15% {
+        opacity:75;
+       
+       
+    }
+
+    25% {
+        opacity:100;
+     
+       
+    }
+
+    
+    35% {
+        opacity:100;
+       
+        
+    }
+
+
+
+    50% {
+        opacity:90;
+        
+    }
+
+    75% {
+        opacity:50;
+        
+    }
+
+    100% {
+         opacity:0;
+         
+    }
+}
+
+
+#validationpanier {
+  animation-fill-mode: forwards;
+  animation: magie 4s ease 0s 1 normal forwards;
+} */
+
 </style>
+
 <%- include ('partials/script.ejs') %>
 <script>
     function remove(){
@@ -82,10 +146,18 @@ data["userid"]=$("#userid").val();
 data["quantite"]=1;
 data["prix"]=this.event.target.parentNode.dataset.prix;
 $.ajax({
+<<<<<<< HEAD
   url:"/panier",type:"post",data:data,success:(data)=>{
     if(data.msg=="ok"){
       console.log(data)
 $("#msg").html("l'article a bien été ajouté au panier");
+=======
+  url:"/panier",type:"post",data:data,success:()=>{
+$(".msg").show(100,"swing");
+$(".msg").html('<button type="button" id="validationpanier" class="btn btn-success">l\'article a bien été ajouté au panier</button>');
+$(".msg").delay(2250).hide(50,"swing");
+
+>>>>>>> d268b8f19937921145ab2a35c32c95ec6022bb41
   }
 else{
   $("#msg").html("Aucun produit en stock");
@@ -147,7 +219,7 @@ for(data of datas){ pro=" <div class='card shadow' style='width: 18rem;margin-ri
      $("#liste").append(pro)
            }
            console.log(datas.length)
-           var pages=Math.ceil(datas.length/10)
+           var pages=Math.ceil(datas.length/12)
            $("#pages").html("");
         for(i=1;i<=pages;i++){
              var page=' <li class="page-item"><a class="page-link"  href="/<%=i%>" style="color:#212529;">'+i+'</a></li>'

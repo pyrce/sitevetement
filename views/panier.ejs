@@ -5,42 +5,66 @@
           <h1 class="text-white  text-center align-self-center  m-auto pt-2 pb-2" style="font-size:1.5em;">VOTRE PANIER : <%=produit.length%> produits</h1>
         </div>
     </div>
-    <div class="d-flex flex-lg-row flex-sm-column-reverse justify-content-sm-center justify-content-lg-around flex-wrap-reverse flex-sm-wrap">
-            <div class="d-flex flex-column">
-        <%for(p of produit){%>
-          <input type="text" data-id="<%=p.id%>" data-user="1" class="panierId" hidden>
-       
-            <div class="card m-auto" style="width: 90%; margin-bottom:2% !important; margin-top:2% !important;">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                        <img class="card-img-top img-fluid" src="http://placehold.it/400x400" alt="">
-                      </div>
-            <div class="d-flex align-items-center justify-content-start">
-                    <div class="col-md-6">
-                      <div class="card-body col-11 m-0">
-                        <h5 class="card-title">Nom (réf) :<%=p.produits[0].nom_produit%></h5>
-                        <p class="card-text ">Quantité en stock : <%=p.produits[0].stock%></p>
-                      </div>
-                    </div>
-        <input type="number" max="<%=p.produits[0].stock%>" min="1" value="<%=p.quantite%>" data-id="<%=p.id%>" onchange="updateqte('<%=p.id%>')">
-                    
-                    <i class="fas fa-times ml-3 mr-3" onclick="remove('<%=p.id%>')" style="color:#796a5a;"></i>
+
+    <% if(produit.length>0){%>
+
+<div class="msg m-auto"></div>
+
+
+      <div class="d-flex flex-lg-row flex-sm-column-reverse justify-content-sm-center justify-content-lg-around flex-wrap-reverse flex-sm-wrap">
+        
+        <div class="d-flex flex-column">
+    <%   for(p of produit){%>
+      <input type="text" data-id="<%=p.id%>" data-user="1" class="panierId" hidden>
+   
+        <div class="card m-auto" style="width: 90%; margin-bottom:2% !important; margin-top:2% !important;">
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <img class="card-img-top img-fluid" src="http://placehold.it/400x400" alt="">
+                  </div>
+        <div class="d-flex align-items-center justify-content-start">
+                <div class="col-md-6">
+                  <div class="card-body col-11 m-0">
+                    <h5 class="card-title">Nom (réf) :<%=p.produits[0].nom_produit%></h5>
+                    <p class="card-text ">Quantité en stock : <%=p.produits[0].stock%></p>
                   </div>
                 </div>
+    <input min="1" max="<%=p.produits[0].stock%>" type="number" value="<%=p.quantite%>" data-id="<%=p.id%>" onchange="updateqte('<%=p.id%>')">
+                
+                <i class="fas fa-times ml-3 mr-3" onclick="remove('<%=p.id%>')" style="color:#796a5a;"></i>
+              </div>
             </div>
-            <%}%>
-  
+        </div>
+      <%}%>
+
+</div>
+<div class="card ml-5" style="width: 18rem;max-height:150px;" id="montant">
+        <div class="card-body">
+          <h5 class="card-title">Montant total des produits</h5>
+          <p class="card-text"><%= some %> €</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class=" btn-success pt-2 pb-2 text-center">Passer commande</li>
+        </ul>
+  </div>
+</div>
+
+
+
+
+
+
+
+   <%}else{%>
+      <div class="row alert alert-success col-10 m-auto h-50" role="alert" style="margin-top:8vh !important;">
+      <div class="m-auto text-center"><p class="display-3 ">Votre panier est vide</p>
+      <a href="/" class=""> Choisissez des produits qui vous correspondent </a></div>
     </div>
-    <div class="card ml-5" style="width: 18rem;max-height:150px;" id="montant">
-            <div class="card-body">
-              <h5 class="card-title">Montant total des produits</h5>
-              <p class="card-text"><%= some %> €</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class=" btn-success pt-2 pb-2 text-center">Passer commande</li>
-            </ul>
-      </div>
-    </div>
+    <%}%>
+
+
+
+
 <style>
     section{
         width:100%;
@@ -79,9 +103,17 @@ $.ajax({
   type:"delete",
   data:data,
   success:()=>{
-    location.reload()
+    $(".msg").show(100,"swing");
+  $(".msg").html('<button type="button" id="validationpanier" class="btn btn-danger">l\'article a bien été enlevé du panier</button>');
+  $(".msg").delay(4000).hide(50,"swing");
+  /*  */
+  setTimeout(location.reload(), 80000);
   }
 })
 
 }
+
+
+
+
 </script>

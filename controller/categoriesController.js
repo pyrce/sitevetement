@@ -11,7 +11,7 @@ if (process.env.DATABASE_URL) {
       protocol: 'postgres'
     })
   }else{
-     sequelize = new Sequelize("mysql://root:root@localhost:8889/vetement",{
+     sequelize = new Sequelize("mysql://root:@localhost:3306/vetement",{
         dialect:  'mysql',
         protocol: 'mysql',
         // disable logging; default: console.log
@@ -27,6 +27,7 @@ if (process.env.DATABASE_URL) {
  */
 controller.liste=(req,res)=>{
 cat.findAll().then((cats)=>{
+/*req.session.user=user */ 
     res.render("categories",{cats:cats, user:req.session.user})
 })
 }
@@ -36,8 +37,9 @@ cat.findAll().then((cats)=>{
  */
 controller.insert=(req,res)=>{
 cat.findAll({limit:1,order:[["id","DESC"]]}).then((cats)=>{
-
+    /*req.session.user=user */
     cat.create({id:cats[0].id+1,nom_categorie:req.body.categorie,etat:1}).then((cat)=>{
+        /*req.session.user=user */
         res.redirect("/categories")
     })
 })
@@ -52,6 +54,7 @@ controller.update=(req,res) =>{
         nom_categorie:req.body.nom_cat},
         {where:{id:req.params.id}}
     ).then(()=>{
+        /*req.session.user=user */
         res.redirect("/categories");
     })
 }
@@ -65,6 +68,7 @@ controller.updateetat=(req,res) =>{
         etat:req.body.etat},
         {where:{id:req.params.id}}
     ).then(()=>{
+        /*req.session.=user */
         res.redirect("/categories");
     })
 }
@@ -74,6 +78,7 @@ controller.updateetat=(req,res) =>{
 */
 controller.remove=(req,res)=>{
     cat.destroy({where:{id:req.params.id}}).then( ()=>{
+        /*req.session.user=user */
        // res.redirect("/categories");
        res.sendStatus(200)
     })

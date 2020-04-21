@@ -1,5 +1,6 @@
-<% include('partials/partials') %>
-
+<%- include('partials/partials') %>
+<div class="container-fluid">
+  <form class="col-12 col-lg-3 m-auto text-center" action="/produits/<%=produit.id%>" method="post">
   <input type="text" value="<%=produit.id%>" hidden id="produitId"/>
     <div class="form-group">
         <label for="nomProduit">Nom produit</label>
@@ -21,8 +22,13 @@
       </div>
 
       <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" value="<%=produit.description%>" name="description" id="description" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+
+      <div class="form-group">
         <label for="image">Image</label>
-        <input type="text" class="form-control" name="image" value="<%=produit.image%>" id="image" aria-describedby="emailHelp" placeholder="Enter email">
+        <input type="text" class="form-control" name="image" value="<%=produit.image_produit%>" id="image" aria-describedby="emailHelp" placeholder="Enter email">
       </div>
 
       <div class="form-group">
@@ -35,7 +41,9 @@
         <input type="number" class="form-control" name="stock" value="<%=produit.stock%>" id="stock" aria-describedby="emailHelp" placeholder="Enter email">
       </div>
 
-      <button onclick="update()" class="btn btn-primary">Ajout</button>
+      <button onclick="update()" class="btn btn-primary" type="submit">Ajout</button>
+    </form>
+    </div>
 
       <%- include ('partials/script.ejs') %>
 <script>

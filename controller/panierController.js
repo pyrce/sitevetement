@@ -17,7 +17,7 @@ if (process.env.DATABASE_URL) {
       protocol: 'postgres'
     })
   }else{
-     sequelize = new Sequelize("mysql://root:root@localhost:8889/vetement",{
+     sequelize = new Sequelize("mysql://root:@localhost:3306/vetement",{
         dialect:  'mysql',
         protocol: 'mysql',
         // disable logging; default: console.log
@@ -47,6 +47,7 @@ if(req.session.user){
       include:[
 {model:produit}
     ],where:{users_id:req.session.user.id}}).then((data)=>{
+      /*req.session.user=user */
 //res.send(data)
 some=0;
 for(p of data){
@@ -77,8 +78,10 @@ console.log("stock : "+p.stock)
     quantite:req.body.quantite,
     prix_unitaire:req.body.prix   
 }).then(()=>{
+  /*req.session.user=user */
 
   panier.findAll({limit:1,order:[["id","DESC"]]}).then(current=>{
+    /*req.session.user=user */
 
     panier_produit.create(
       {
@@ -108,6 +111,7 @@ controller.update=(req,res) => {
   panier.update({quantite:req.body.qte},{
     where:{users_id:req.body.userid,id:req.params.id}
   }).then(()=>{
+    /*req.session.user=user */
     res.sendStatus(200)
   })
 }
@@ -118,8 +122,10 @@ controller.update=(req,res) => {
  */
 controller.delete=(req,res) => {
   panier_produit.destroy({where:{panier_id:req.params.id}}).then(()=>{
+    /*req.session.user=user */
 
     panier.destroy({where:{id:req.params.id,userId:req.body.userid}}).then(()=>{
+      /*req.session.user=user */
     res.sendStatus(200);
     })
   })
