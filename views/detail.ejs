@@ -20,7 +20,7 @@
           </div>
           <div class="card-body">
             <h4 class="card-title" id="prix">$<%=produit.prix_unitaire%></h4>
-            <h4>Stock</h4>
+            <h4>Stock : <%=produit.stock%></h4>
             <p class="card-text">
                 <%=produit.description%>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
@@ -28,13 +28,8 @@
         
               <div class="form-group col-lg-2">
                 <label for="exampleFormControlSelect1">Quantité</label>
-                <select class="form-control" id="quantite">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
+               
+                <input id="quantite" min="1" max="<%=produit.stock%>" type="number" value="1">
             </div>
             <div class="form-group">
               <button onclick="addpanier()" class="btn" style="background-color: #796a5a; color: white;">Ajouter au panier</button>

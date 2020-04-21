@@ -1,0 +1,169 @@
+<%- include('partials/partials') %>
+
+<form action="add" class="col-12 col-xs-8 col-sm-8 col-md-6 col-lg-6 col-xl-4 m-auto text-center py-5" method="post">
+  <h2 class="mb-5" style="color:#525050;">Ajouter un nouveau produit</h2>
+    <div class="form-group">
+        <label for="nomProduit">Nom produit</label>
+        <input type="text" class="form-control" name="nomproduit" id="nomProduit" aria-describedby="emailHelp" placeholder="Nom du nouveau produit">
+      </div>
+
+      <div class="form-group">
+        <label for="designation">Categorie</label>
+        <select name="categorie" >
+            <%for(c of cat){%>
+<option value="<%=c.id%>"><%=c.nom_categorie%></option>
+                <%}%>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="designation">Designation</label>
+        <input type="text" class="form-control" name="designation" id="designation" aria-describedby="emailHelp" placeholder="Désignation">
+      </div>
+
+      <div class="form-group">
+        <label for="designation">Description</label>
+        <input type="text" class="form-control" name="description" id="description" aria-describedby="emailHelp" placeholder="Description">
+      </div>
+
+      <div class="form-group">
+        <label for="image">Nom de l'image</label>
+        <input type="text" class="form-control" name="image" id="image" aria-describedby="emailHelp" placeholder="exemple : image.jpg">
+      </div>
+
+      <div class="form-group">
+        <label for="designation">Prix</label>
+        <input type="number" class="form-control" name="prix" id="prix" aria-describedby="emailHelp" placeholder="Sans signe monétaire">
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input type="number" class="form-control" name="stock" id="stock" aria-describedby="emailHelp" placeholder="Quantité du produit dans vos stocks">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Ajout</button>
+</form>
+
+<table class="table">
+  <thead  class="text-white" style="background-color:#2d2d2d;">
+    <tr>
+      <th scope="col">Nom produit</th>
+      <th scope="col">catégorie</th>
+      <th scope="col">Désignation</th>
+      <th scope="col">Description</th>
+      <th scope="col">Nom img</th>
+      <th scope="col">Prix</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+
+    <%for(p of prod){%>
+    <tr>
+      <td><%=p.nom_produit%></td>
+
+
+   <td><%= p.category.nom_categorie%></td>
+
+
+    
+
+      <td><%=p.designation%></td>
+      <td><%=p.description%></td>
+      <td><%=p.image_produit%></td>
+      <td><%=p.prix_unitaire%></td>
+      <td><%=p.stock%></td>
+      <td>
+        <i class="fas fa-times" onclick="remove('<%=p.id%>')"></i>
+        <a href="/produits/modifier/<%=p.id%>"><i class="fas fa-edit ml-3"></i></a>
+      </td>
+    </tr>
+<%}%>
+
+
+
+  </tbody>
+</table>
+
+
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form action="" method="post" id="form">
+<input type="text" value="" name="nom_cat" id="modal_cat" />
+<button type="submit" id="btn" class="btn btn-primary" >Modifier</button>
+      </form>
+    </div>
+  
+  </div>
+  <style>
+    .modal {
+display: none; /* Hidden by default */
+position: fixed; /* Stay in place */
+z-index: 1; /* Sit on top */
+padding-top: 50px; /* Location of the box */
+left: 0;
+top: 0;
+width: 100%; /* Full width */
+height: 100%; /* Full height */
+overflow: auto; /* Enable scroll if needed */
+background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+background-color: #fefefe;
+margin: auto;
+padding: 20px;
+border: 1px solid #888;
+width: 80%;
+}
+  </style>
+
+<%- include ('partials/script.ejs')%>
+<script>
+function update(id){ 
+nom= event.currentTarget.dataset.nom
+console.log(nom)
+$(".modal").css({"display":"flex","justify-items":"center"});
+$("#modal_cat").val(nom);
+$("#form").attr("action","/categories/"+id);
+}
+$(".etat").on("change",()=>{
+id=event.currentTarget.dataset.id
+val=event.currentTarget.value
+data={}
+data["etat"]=val
+$.ajax({
+url:"/categories/"+id,
+type:"PUT",
+headers: {"X-HTTP-Method-Override": "PUT"},
+data:data
+})
+})
+var span = document.getElementsByClassName("close")[0];
+var modal = document.getElementsByClassName("modal")[0];
+span.onclick = function() {
+modal.style.display = "none";
+}
+function remove(id){
+console.log(id)
+$.ajax({
+url:"/produits/"+id,
+type:"DELETE",
+success:()=>{
+location.reload();
+
+}
+})
+}
+
+
+</script>

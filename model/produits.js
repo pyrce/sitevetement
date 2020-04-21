@@ -10,7 +10,7 @@ if (process.env.DATABASE_URL) {
       protocol: 'postgres'
     })
   }else{
-     sequelize = new Sequelize("mysql://root:root@localhost:8889/vetement",{
+     sequelize = new Sequelize("mysql://root:@localhost:3306/vetement",{
         dialect:  'mysql',
         protocol: 'mysql',
         // disable logging; default: console.log
@@ -27,8 +27,8 @@ const produits = sequelize.define('produits', {
     },
         nom_produit:Sequelize.STRING(30),
         designation:Sequelize.STRING(30),
-        prix_unitaire:Sequelize.FLOAT,
-        stock:Sequelize.INTEGER,
+        prix_unitaire:Sequelize.FLOAT(),
+        stock:Sequelize.INTEGER(),
         description:Sequelize.STRING(30),
         image_produit:Sequelize.STRING(30),
         categoryId:{field:"categories_id",type:Sequelize.INTEGER,references:"categories"}

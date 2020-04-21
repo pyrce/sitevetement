@@ -10,7 +10,7 @@ if (process.env.DATABASE_URL) {
       protocol: 'postgres'
     })
   }else{
-     sequelize = new Sequelize("mysql://root:root@localhost:8889/vetement",{
+     sequelize = new Sequelize("mysql://root:@localhost:3306/vetement",{
         dialect:  'mysql',
         protocol: 'mysql',
         // disable logging; default: console.log
@@ -19,12 +19,49 @@ if (process.env.DATABASE_URL) {
       });
   }
 
-  controller.login=(req,res) => {
+/*   controller.login=(req,res) => {
       users.findOne({email:req.body.email,password:req.body.password}).then((user) => {
           req.session.user=user
           res.redirect("/")
       })
-  }
+  } */
+
+
+/*   controller.login=(req, res, email, password, callback) => {
+
+    
+      const mysql = require('mysql2');
+      const bcrypt = require('bcrypt');
+    
+      const connection = mysql({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'vetement'
+      });
+    
+      connection.connect();
+    
+      const query = 'SELECT email, password FROM users WHERE email = ?';
+    
+      connection.query(query, [ email ], function(err, results) {
+        if (err) return callback(err);
+        if (results.length === 0) return callback(new WrongUsernameOrPasswordError(email));
+        const user = results[0];
+    
+        bcrypt.compare(password, user.password, function(err, isValid) {
+          if (err || !isValid) return callback(err || new WrongUsernameOrPasswordError(email));
+    
+          callback(null, {
+            user_id: user.id.toString(),
+            nickname: user.nickname,
+            email: user.email
+          });
+        });
+      });
+    
+    
+    } */
 
   controller.connect=(req,res) => {
 
@@ -37,7 +74,7 @@ if (process.env.DATABASE_URL) {
   }
 
   controller.deconnection=(req,res) => {
-    req.sessionn.user=false;
+    req.session.user=false;
     res.redirect("/");
   }
   module.exports=controller;
