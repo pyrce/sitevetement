@@ -91,7 +91,6 @@ console.log(data.length)
  * @version 1.0
  */
 controller.listeproduits = (req, res) => {
-<<<<<<< HEAD
     if (typeof req.session.user == "undefined"){
         req.session.user = {
             id: 1,
@@ -100,8 +99,6 @@ controller.listeproduits = (req, res) => {
     
     }
     const pageSize = 10;
-=======
->>>>>>> d268b8f19937921145ab2a35c32c95ec6022bb41
 
     if (typeof req.session.user == "undefined"){
         req.session.user = {
