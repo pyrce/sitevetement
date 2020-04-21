@@ -38,6 +38,7 @@ app.use(passport.session())
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(flash()); // use connect-flash for flash messages stored in session
 // routes*/
+app.use(flash());
 const operationRoutes = require("./route/siteRoutes");
 app.use('/', operationRoutes);
 // starting the server

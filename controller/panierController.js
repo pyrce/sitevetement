@@ -7,6 +7,7 @@ const users=require('../model/users').users;
 var produit=produitModel.produits;
 var mysql = require('mysql2');
 var Sequelize=require('sequelize')
+const seq = Sequelize.Op;
 //db=(typeof process.env.DB_DATABASE!="undfined") ? process.env.DB_CONNECTION+"://"+process.env.DB_USER+":"+process.env.DB_PASSWORD+"@"+process.env.DB_HOST+":"+process.env.DB_PORT+"/"+process.env.DB_DATABASE :"mysql://root:root@localhost:3306/vetement"
 var sequelize;
 if (process.env.DATABASE_URL) {
@@ -61,6 +62,16 @@ for(p of data){
  */
 controller.ajout=(req,res)=>{
 var produitid=req.body.produitid;
+console.log(produitid)
+produit.findOne({
+  where: {
+      id: { [seq.eq]:produitid
+  }
+}}).then((p)=>{ if(p.stock==0){ 
+console.log("stock : "+p.stock)
+  res.send({"msg":"ko"});
+}else{
+
   panier.create({
     userId:req.body.userid,
     quantite:req.body.quantite,
@@ -75,17 +86,19 @@ var produitid=req.body.produitid;
         produitId:produitid
       }
     ).then(result =>{
-      res.sendStatus(200);
+      res.send({"msg":"ok"});
     }).catch(function(err) {
       // print the error details
       console.log(err);
   });
   })
-
-}).catch(function(err) {
+} )
+}
+})
+/*.catch(function(err) {
   // print the error details
   console.log(err);
-});
+});*/
 }
 /**Modifie la quantité du produit dans la panier de l'utilisateur 
   * @param req requete utilisateur. Contient id utilisateur et id pannier envoyer en ajax

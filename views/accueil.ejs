@@ -27,27 +27,27 @@
   
         <nav aria-label="...">
           <ul class="pagination pagination-lg mt-5 ml-5" id="pages">
-            <%for(i=1;i<=Math.ceil(total/10);i++){%>
-              <li class="page-item"><a class="page-link"  href="/<%=i%>" style="color:#212529;"><%=i%></a></li>
+            <%for(i=0;i<=total;){%>
+              <li class="page-item"><a class="page-link"  href="/<%=i+=1%>" style="color:#212529;"><%=i%></a></li>
               <%}%>
           
           </ul>
         </nav>
-       
+       Total <%= total%>
         <div class="d-flex flex-column mt-5" id="produits">
           <div id="msg"></div>
           <div class="d-flex flex-row flex-wrap " id="liste">
        <%   for(p of product){ %>
           <div class="card shadow" style="width: 18rem;margin-right: 10px;">
-            <h5 class="card-title m-auto"><%=p.nom_produit%></h5>
-            
+        <div class="d-flex flex-row flex-wrap ">  <h5 class="card-title m-auto"><%=p.nom_produit%> </h5>
+            <span class="badge badge-info" style="line-height: 14px;height: 22px;"><%=p.nom_categorie%></span> </div>  
             <img class="card-img-top img-fluid" src="http://placehold.it/100x100" alt="">
             <div class="card-body">
               
               <p class="card-text"><%=p.description%></p>
               <div class="d-flex justify-content-between"><p><%=p.prix_unitaire%> €</p>
                 <a type="button" href="/produits/<%=p.id%>" class="btn" style="background-color:#796a5a;"><i class="fas fa-search text-white"></i></a>
-              <button onclick="addpanier()" type="button" data-id="<%=p.id%>" data-prix="<%=p.prix_unitaire%>" class="btn" style="background-color:#796a5a;"><i class="fas fa-cart-plus text-white"></i></button></div>
+              <button onclick="addpanier('<%=p.id%>')" type="button" data-id="<%=p.id%>" data-prix="<%=p.prix_unitaire%>" class="btn" style="background-color:#796a5a;"><i class="fas fa-cart-plus text-white"></i></button></div>
             </div>
             
         </div>
@@ -74,16 +74,22 @@
 });
     }
 
-    function addpanier(){
+    function addpanier(id){
   
 var  data={};
-data["produitid"]=this.event.target.parentNode.dataset.id;
+data["produitid"]=id;
 data["userid"]=$("#userid").val();
 data["quantite"]=1;
 data["prix"]=this.event.target.parentNode.dataset.prix;
 $.ajax({
-  url:"/panier",type:"post",data:data,success:()=>{
+  url:"/panier",type:"post",data:data,success:(data)=>{
+    if(data.msg=="ok"){
+      console.log(data)
 $("#msg").html("l'article a bien été ajouté au panier");
+  }
+else{
+  $("#msg").html("Aucun produit en stock");
+}
   }
 })
 }
@@ -133,7 +139,7 @@ for(data of datas){ pro=" <div class='card shadow' style='width: 18rem;margin-ri
             
           "  <p class='card-text'>"+data.description+"</p>"+
            " <div class='d-flex justify-content-between'><p>"+data.prix_unitaire+" €</p>"+
-             " <a type='button' href='/produits/<%=p.id%>' class='btn' style='background-color:#796a5a;'><i class='fas fa-search text-white'></i></a>"+
+             " <a type='button' href='/produits/'"+data.id+" class='btn' style='background-color:#796a5a;'><i class='fas fa-search text-white'></i></a>"+
            " <a type='button' class='btn' style='background-color:#796a5a;'><i class='fas fa-cart-plus text-white'></i></a></div>"+
         "  </div>"+
           

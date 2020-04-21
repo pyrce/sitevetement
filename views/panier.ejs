@@ -22,7 +22,7 @@
                         <p class="card-text ">Quantité en stock : <%=p.produits[0].stock%></p>
                       </div>
                     </div>
-        <input type="number" value="<%=p.quantite%>" data-id="<%=p.id%>" onchange="updateqte('<%=p.id%>')">
+        <input type="number" max="<%=p.produits[0].stock%>" min="1" value="<%=p.quantite%>" data-id="<%=p.id%>" onchange="updateqte('<%=p.id%>')">
                     
                     <i class="fas fa-times ml-3 mr-3" onclick="remove('<%=p.id%>')" style="color:#796a5a;"></i>
                   </div>

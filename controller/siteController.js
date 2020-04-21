@@ -30,8 +30,8 @@ if (process.env.DATABASE_URL) {
 users.hasMany(com);
 com.belongsTo(users);
 moment.locale('fr');
-cat.hasMany(produits);
-produits.belongsTo(cat);
+cat.hasMany(produits,{foreignKey: produits.categoryId});
+produits.belongsTo(cat,{foreignKey: produits.categoryId});
 
 
 
@@ -47,35 +47,38 @@ controller.liste = (req, res) => {
             nom_client: "tom"
         }
     //if(typeof req.session.user!="undefined"){
-    const pageSize = 10;
-    //console.log( req.session.user)
-    var page = (typeof req.params.page != "undefined" && req.params.page > 0) ? req.params.page : 0
-    var offset = parseInt(page) * pageSize;// calcul le nombre de ligne ignoré
-    const limit = pageSize;
-    var catid = typeof req.body.cat_id != "undefined" ? req.body.cat_id : ''
+    const pageSize = 5;
 
-    produits.findAll({
+    var page = (typeof req.params.page != "undefined" || parseInt(req.params.page)>0 ) ? parseInt(req.params.page) : 1
+    var offset = Math.abs((1-parseInt(page))) * pageSize;// calcul le nombre de ligne ignoré
+   
+console.log(offset)
+  /*  produits.findAll( {
+       
        include: [{
-                model: cat,where:{etat:1}//ne liste que les produits actifs
+                model: cat,where:{ etat:{[seq.eq]:1} },//ne liste que les produits actifs
+               
             }]
-        }, {
-            limit,
-            offset
-        })
-        .then((data) => {
-            produits.findAll().then(all => {
-
-                cat.findAll().then((cats) => {//listes des categorie pour la rechrerche
+            
+        },{limit:limit,offset:offset})*/
+        sequelize.query("SELECT * from produits p "+
+       " join categories c on p.categories_id=c.id where c.etat=1 order by p.id asc limit :start offset :end ",
+        {replacements:{ start: pageSize,end:offset }})
+        .then((data) => { 
+//res.send(data[ Math.abs((1-parseInt(page))) ])
+console.log(data.length)
+                cat.findAll({ where:{ etat:{[seq.eq]:1} } }).then((cats) => {//listes des categorie pour la rechrerche
 
                     res.render("accueil", {
-                        product: data,
-                        total: all.length,
+                        product: data[ Math.abs((1-parseInt(page))) ],
+                        total: data.length,
+                        pages:pageSize,
                         cats: cats,
                         user: req.session.user
                     });
                 })
 
-            })
+       
 
         })
     //}else {res.redirect("/login")}
@@ -87,6 +90,13 @@ controller.liste = (req, res) => {
  * @version 1.0
  */
 controller.listeproduits = (req, res) => {
+    if (typeof req.session.user == "undefined"){
+        req.session.user = {
+            id: 1,
+            nom_client: "tom"
+        }
+    
+    }
     const pageSize = 10;
 
     var page = (typeof req.params.page != "undefined" && req.params.page > 0) ? req.params.page : 0
@@ -95,7 +105,7 @@ controller.listeproduits = (req, res) => {
 
 
     var cat_id = req.body.cat_id != '' ? req.body.cat_id : null
-
+console.log("debut")
     var wherestmt = {}
     var prices = []
     //verifie si on recupere le champ cat_id
@@ -105,6 +115,7 @@ controller.listeproduits = (req, res) => {
             [seq.eq]: cat_id
         }
     }
+    console.log(wherestmt)
     wherestmt["prix_unitaire"] = {}
     if (Number(req.body.prixmin) > 0) {
 
@@ -118,7 +129,7 @@ controller.listeproduits = (req, res) => {
     if (Number(req.body.prixmax) > 0) {
         prices.push(req.body.prixmax)
     }
-
+   
 //si le tableau contient 1 élément on cherche tous les prodduits dont le prix est supperieur
 //sinon on cherche ce qui sont compris entre
     wherestmt["prix_unitaire"] = prices.length > 1 ? {
@@ -126,13 +137,10 @@ controller.listeproduits = (req, res) => {
     } : {
         [seq.gte]: prices[0]
     }
-//console.log(wherestmt);
-    produits.findAll({
+
+    produits.findAll( {
             where: wherestmt
 
-        }, {
-            limit,
-            offset
         },
         )
         .then((data) => {
@@ -186,7 +194,7 @@ console.log(req.params.id)
 }
 
 controller.ajout = (req, res) => {
-    cat.findAll().then((cats) => {
+    cat.findAll({ where:{ etat:{[seq.eq]:1} } }).then((cats) => {
 
         res.render("ajout", {
             cat: cats
@@ -204,15 +212,16 @@ controller.add = (req, res) => {
         image_produit: req.body.image,
         stock: req.body.stock,
         prix_unitaire: req.body.prix,
-        categories_id: req.body.categorie
+        categoryId: req.body.categorie
     }).then(() => {
         res.redirect("/");
     })
 }
 controller.modifier = (req, res) => {
     produits.findOne({
-        id: req.params.id
-    }).then((data) => {
+        where:{
+              id:{[seq.eq]:req.params.id}
+          } }).then((data) => {
         cat.findAll().then((cats) => {
             res.render("modifier", {
                 produit: data,
@@ -226,8 +235,9 @@ controller.modifier = (req, res) => {
 controller.update = (req, res) => {
     console.log(req.body)
     produits.findOne({
-        id: req.params.id
-    }).then((produit) => {
+        where:{
+              id:{[seq.eq]:req.params.id}
+          } }).then((produit) => {
 
         produit.update({
             nom_produit: req.body.nom,

@@ -12,6 +12,7 @@ const userController=require("../controller/usersController.js")
     failureRedirect: '/login',
     failureFlash: true }),(req,res)=>{res.redirect("/")});
 router.get("/login",(req,res)=>{res.render("login")})*/
+
 router.get("/", operationController.liste);
 router.put("/commentaires", comController.ajout);
 router.get("/commentaires", comController.liste);
@@ -29,12 +30,12 @@ router.post("/panier", panierController.ajout);
 router.put("/panier/:id",panierController.update);
 router.delete("/panier/:id",panierController.delete);
 
+router.get("/", operationController.liste);
+router.get("/:page", operationController.liste);
 
 router.get("/produits/ajout", operationController.ajout);
 router.get("/produits/:id", operationController.detail);
-
-router.post("/", operationController.listeproduits);
-router.get("/:page", operationController.liste);
+router.post("/",operationController.listeproduits)
 router.post("/produits/add",operationController.add)
 router.get("/produits/modifier/:id",operationController.modifier)
 router.put("/produits/:id",operationController.update)
@@ -42,6 +43,7 @@ router.delete("/produits/:id",operationController.delete)
 
 router.get("/connect/:id",userController.connect)
 router.get("/deconnection",userController.deconnection)
+
 //ifreturn router;
 //}
 module.exports = router;

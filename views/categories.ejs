@@ -16,7 +16,7 @@
   </form>
  
 
-
+<input type="text" value="<%=user.id%>" id="id_user" hidden>
 
     <table class="table">
       <thead  class="text-white" style="background-color:#2d2d2d;">
@@ -85,7 +85,8 @@
    <script>
    function update(id){ 
 nom= event.currentTarget.dataset.nom
-console.log(nom)
+
+
 $(".modal").css({"display":"flex","justify-items":"center"});
 $("#modal_cat").val(nom);
 $("#form").attr("action","/categories/"+id);
@@ -95,6 +96,7 @@ $(".etat").on("change",()=>{
   val=event.currentTarget.value
 data={}
 data["etat"]=val
+data["user"]=$("#id_user").val();
   $.ajax({
     url:"/categories/"+id,
     type:"PUT",
