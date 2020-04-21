@@ -106,7 +106,7 @@ controller.listeproduits = (req, res) => {
             nom_client: "tom"
         }
     
-    }
+    
 
     const pageSize = 12;
     
@@ -152,24 +152,11 @@ console.log("debut")
         [seq.gte]: prices[0]
     }
 
-<<<<<<< HEAD
     produits.findAll( {
             where: wherestmt
 
         },
         )
-=======
-
-//console.log(wherestmt);
-    produits.findAll(   {
-     
-       
-            where: wherestmt
-
-        }
-    )
-
->>>>>>> d268b8f19937921145ab2a35c32c95ec6022bb41
         .then((data) => {
             /*req.session.user=user */
            //  console.log(data[0])
@@ -180,7 +167,7 @@ console.log("debut")
         })
 }
 
-
+}
 
 /**Réccupère l'id du produit dans l'url et retourne la page d'infos du produits.
   * @param req requete utilisateur
@@ -228,13 +215,8 @@ console.log(req.params.id)
 }
 
 controller.ajout = (req, res) => {
-<<<<<<< HEAD
     cat.findAll({ where:{ etat:{[seq.eq]:1} } }).then((cats) => {
 
-=======
-    cat.findAll().then((cats) => {
-        /*req.session.user=user */
->>>>>>> d268b8f19937921145ab2a35c32c95ec6022bb41
         res.render("ajout", {
             cat: cats
         });
@@ -263,15 +245,8 @@ controller.add = (req, res) => {
 controller.modifier = (req, res) => {
     produits.findOne({
         where:{
-<<<<<<< HEAD
               id:{[seq.eq]:req.params.id}
           } }).then((data) => {
-=======
-            id:{[seq.eq]:req.params.id}
-        }
-    }).then((data) => {
-        /*req.session.user=user */
->>>>>>> d268b8f19937921145ab2a35c32c95ec6022bb41
         cat.findAll().then((cats) => {
             /*req.session.user=user */
             res.render("modifier", {
@@ -287,15 +262,8 @@ controller.update = (req, res) => {
     console.log(req.body)
     produits.findOne({
         where:{
-<<<<<<< HEAD
               id:{[seq.eq]:req.params.id}
           } }).then((produit) => {
-=======
-            id:{[seq.eq]:req.params.id}
-        }
-    }).then((produit) => {
-        /*req.session.user=user */
->>>>>>> d268b8f19937921145ab2a35c32c95ec6022bb41
 
         produit.update({
             nom_produit: req.body.nom,
