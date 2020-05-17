@@ -142,27 +142,21 @@ data["userid"]=$("#userid").val();
 data["quantite"]=1;
 data["prix"]=this.event.target.parentNode.dataset.prix;
 $.ajax({
-<<<<<<< HEAD
   url:"/panier",type:"post",data:data,success:(data)=>{
     if(data.msg=="ok"){
-      console.log(data)
-$("#msg").html("l'article a bien été ajouté au panier");
-=======
-  url:"/panier",type:"post",data:data,success:()=>{
+ 
 $(".msg").show(100,"swing");
 $(".msg").html('<button type="button" id="validationpanier" class="btn btn-success">l\'article a bien été ajouté au panier</button>');
 $(".msg").delay(2250).hide(50,"swing");
 
->>>>>>> d268b8f19937921145ab2a35c32c95ec6022bb41
   }
 else{
   $("#msg").html("Aucun produit en stock");
 }
-  }
-})
+  
 }
-
-
+})
+    }
 
 $("#categories").on("change",()=>{
   data={}

@@ -34,6 +34,7 @@
                 <i class="fas fa-times ml-3 mr-3" onclick="remove('<%=p.id%>')" style="color:#796a5a;"></i>
               </div>
             </div>
+            
         </div>
       <%}%>
 
@@ -41,10 +42,10 @@
 <div class="card ml-5" style="width: 18rem;max-height:150px;" id="montant">
         <div class="card-body">
           <h5 class="card-title">Montant total des produits</h5>
-          <p class="card-text"><%= some %> €</p>
+          <p id="somme" class="card-text"><%= some %> €</p>
         </div>
         <ul class="list-group list-group-flush">
-          <li class=" btn-success pt-2 pb-2 text-center">Passer commande</li>
+          <li id="paypal-button" class=" btn-success pt-2 pb-2 text-center">Passer commande</li>
         </ul>
   </div>
 </div>
@@ -76,7 +77,7 @@
 
 </style>
 <%- include ('partials/script.ejs') %>
-
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
 function updateqte(id){
   
@@ -113,6 +114,46 @@ $.ajax({
 
 }
 
+paypal.Button.render({
+    // Configure environment
+    env: 'sandbox',
+    client: {
+      sandbox: 'AVzL9CJS1yxXFVjUJnLfpIvnH24w3rktpSd4sTjI-tlw5QAKQZwNZy8KSkISln2yDFQsyv7sm9O_IOMy',
+      production: 'demo_production_client_id'
+    },
+    // Customize button (optional)
+    locale: 'en_US',
+    style: {
+      size: 'small',
+      color: 'gold',
+      shape: 'pill',
+    },
+
+    // Enable Pay Now checkout flow (optional)
+    commit: true,
+
+    // Set up a payment
+    payment: function(data, actions) {
+      return actions.payment.create({
+        transactions: [{
+          amount: {
+            total: $("#somme").html().match(/[0-9]{1,}/)[0],
+            currency: 'USD'
+          }
+        }]
+      });
+    },
+    // Execute the payment
+    onAuthorize: function(data, actions) {
+
+      $.post("/my-api/create-payment/",()=>{  window.alert('Thank you for your purchase!');})
+     /* return actions.payment.execute().then(function() {
+        // Show a confirmation message to the buyer
+
+        window.alert('Thank you for your purchase!');
+      });*/
+    }
+  }, '#paypal-button');
 
 
 
