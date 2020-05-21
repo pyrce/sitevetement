@@ -12,7 +12,7 @@ app.use(bodyParser());
 // importing routes
 
 const panierRoutes = require('./route/panierRoute');
-var passport = require('passport');
+//var passport = require('passport');
 
 const comRoutes = require('./route/comRoutes');
 // settings
