@@ -5,7 +5,7 @@ const ejs=require('ejs');
 const bodyParser = require('body-parser');
 var session = require('express-session');
 const app = express();
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 app.use(bodyParser());
 
@@ -38,7 +38,7 @@ app.use(passport.session())
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(flash()); // use connect-flash for flash messages stored in session
 // routes*/
-app.use(flash());
+//app.use(flash());
 const operationRoutes = require("./route/siteRoutes");
 app.use('/', operationRoutes);
 // starting the server
