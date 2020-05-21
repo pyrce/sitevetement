@@ -7,7 +7,7 @@ const users = require("../model/users").users;
 const moment = require("moment")
 var Sequelize = require('sequelize');
 const seq = Sequelize.Op;
-var passport = require('passport');
+//var passport = require('passport');
 var sql = require("mysql2");
 const cat = require("../model/categories").categories;
 
