@@ -5,8 +5,8 @@ const ejs=require('ejs');
 const bodyParser = require('body-parser');
 var session = require('express-session');
 const app = express();
-//var cookieParser = require('cookie-parser');
-var flash = require('connect-flash');
+var cookieParser = require('cookie-parser');
+//var flash = require('connect-flash');
 app.use(bodyParser());
 
 // importing routes
