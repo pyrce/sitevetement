@@ -45,7 +45,9 @@ router.get("/deconnection",userController.deconnection)
 router.post("/my-api/login/",paiementController.login);
 router.post("/my-api/create-payment/",paiementController.createpaiement);
 router.post("/my-api/execute-payment/",paiementController.executepaiement);
-//router.get("/login",userController.login)
+router.get("/connection",userController.connect)
+router.post("/login",userController.login);
+router.get("/deconnection",userController.deconnection)
 //ifreturn router;
 //}
 module.exports = router;

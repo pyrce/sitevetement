@@ -2,8 +2,9 @@ controller = {}
 const produits = require('../model/produits').produits;
 
 const com = require("../model/commentaires").commentaires;
-
+var jwt = require('jsonwebtoken');
 const users = require("../model/users").users;
+var cookieParser = require('cookie-parser');
 const moment = require("moment")
 var Sequelize = require('sequelize');
 const seq = Sequelize.Op;
@@ -46,14 +47,9 @@ produits.belongsTo(cat, {
  * @url /
  */
 controller.liste = (req, res) => {
-    if (typeof req.session.user == "undefined")
-        req.session.user = {
-            id: 1,
-            nom_client: "tom"
-        }
-    //if(typeof req.session.user!="undefined"){
-    const pageSize = 5;
+ 
 
+    const pageSize = 5;
     var page = (typeof req.params.page != "undefined" || parseInt(req.params.page) > 0) ? parseInt(req.params.page) : 1
     var offset = Math.abs((1 - parseInt(page))) * pageSize; // calcul le nombre de ligne ignoré
 
@@ -74,7 +70,7 @@ controller.liste = (req, res) => {
             })
         .then((data) => {
             //res.send(data[ Math.abs((1-parseInt(page))) ])
-            console.log(data.length)
+     
             cat.findAll({
                 where: {
                     etat: {
@@ -88,14 +84,14 @@ controller.liste = (req, res) => {
                     total: data.length,
                     pages: pageSize,
                     cats: cats,
-                    user: req.session.user
+                    user: req.signedCookies["user"]
                 });
             })
 
 
 
         })
-    //}else {res.redirect("/login")}
+
 }
 /** Lors qu'on effectue une recherche , on retourne la liste des produits correspondant aux critères
  * @method GET
@@ -361,7 +357,7 @@ controller.delete = (req, res) => {
  */
 controller.gerer = (req, res) => {
 
-
+if(typeof req.signedCookies["user"]!="undefined"){
     cat.findAll().then((cats) => {
         /*req.session.user=user */
         produits.findAll({
@@ -374,13 +370,13 @@ controller.gerer = (req, res) => {
             res.render("gerer", {
                 prod: produits,
                 cat: cats,
-                user: req.session.user
+                user:req.signedCookies["user"]
 
             });
 
         })
 
-    })
+    })}else{res.redirect("/")}
 }
 
 

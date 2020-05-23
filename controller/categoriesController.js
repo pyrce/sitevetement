@@ -28,7 +28,7 @@ if (process.env.DATABASE_URL) {
 controller.liste=(req,res)=>{
 cat.findAll().then((cats)=>{
 /*req.session.user=user */ 
-    res.render("categories",{cats:cats, user:req.session.user})
+    res.render("categories",{cats:cats, user:req.signedCookies["user"]})
 })
 }
 /**Ajoute une categorie

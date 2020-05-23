@@ -1,6 +1,8 @@
 controller={}
 const users=require('../model/users').users;
 var Sequelize = require('sequelize');
+var jwt = require('jsonwebtoken');
+var cookieParser = require('cookie-parser');
 var sequelize;
 //db=(typeof process.env.DB_DATABASE!="undefined") ? process.env.DB_CONNECTION+"://"+process.env.DB_USER+":"+process.env.DB_PASSWORD+"@"+process.env.DB_HOST+":"+process.env.DB_PORT+"/"+process.env.DB_DATABASE :"mysql://root:root@localhost:3306/vetement"
 if (process.env.DATABASE_URL) {
@@ -19,12 +21,9 @@ if (process.env.DATABASE_URL) {
       });
   }
 
-/*   controller.login=(req,res) => {
-      users.findOne({email:req.body.email,password:req.body.password}).then((user) => {
-          req.session.user=user
-          res.redirect("/")
-      })
-  } */
+  controller.connect=(req,res) => {
+      res.render("login");
+  } 
 
 
 /*   controller.login=(req, res, email, password, callback) => {
@@ -63,18 +62,22 @@ if (process.env.DATABASE_URL) {
     
     } */
 
-  controller.connect=(req,res) => {
+  controller.login=(req,res) => {
 
-    users.findOne({where:{id: req.params.id}}).then((user) => {
+    users.findOne({where:{email: req.body.email,password: req.body.password}  }).then((user) => {
      // console.log(user)
-      req.session.user=user
+    //  req.session.user=user
+    var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+    res.cookie('user', user, { maxAge: 1000*60*60, httpOnly: true ,signed:true});
       res.redirect("/");
+    
     })
 
   }
 
   controller.deconnection=(req,res) => {
-    req.session.user=false;
-    res.redirect("/");
+    console.log("ddeconnection");
+    res.clearCookie('user');
+       res.redirect("/");
   }
   module.exports=controller;

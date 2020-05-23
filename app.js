@@ -27,17 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //require('./route/siteRoutes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-app.use(session({cookie: { maxAge: 60000 }, 
-  secret: 'I Love India...',
-  resave: false,
-  saveUninitialized: false
-}));/*
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(cookieParser()); // read cookies (needed for auth)
-app.use(flash()); // use connect-flash for flash messages stored in session
-// routes*/
+app.use(cookieParser("secret")); // read cookies (needed for auth)
+
 //app.use(flash());
 const operationRoutes = require("./route/siteRoutes");
 app.use('/', operationRoutes);

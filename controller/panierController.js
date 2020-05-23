@@ -36,23 +36,22 @@ if (process.env.DATABASE_URL) {
  */
 controller.liste=(req,res) => {
 
-  //verifie si l'utilisateur est connecté
-if(req.session.user){
+console.log(req.signedCookies);
 
   //réccupére tous les produits de panier de l'utilisateur
     panier.findAll({
       
       include:[
 {model:produit}
-    ],where:{users_id:req.session.user.id}}).then((data)=>{
+    ],where:{users_id:req.signedCookies["user"].id}}).then((data)=>{
 //fait le total des produits
 some=0;
 for(p of data){
   some+=p.prix_unitaire*p.quantite
 }
- res.render("panier",{produit:data,some:some,user:req.session.user});
+ res.render("panier",{produit:data,some:some,user:  req.signedCookies["user"]});
 } )
-}else{res.redirect("/")}
+
 }
 /**Ajout un produit au panier de l'utilisateur
   * @method POST
