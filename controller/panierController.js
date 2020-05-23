@@ -70,7 +70,7 @@ console.log("stock : "+p.stock)
 }else{
 
   panier.create({
-    userId:req.body.userid,
+    userId:req.signedCookies["user"].id,
     quantite:req.body.quantite,
     prix_unitaire:req.body.prix   
 }).then(()=>{
