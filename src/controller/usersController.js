@@ -31,15 +31,20 @@ if (process.env.DATABASE_URL) {
   controller.login= (req,res) => {
 
     users.findOne({where:{email: req.body.email}  }).then(async (user) => {
+
       //compare le hashh du mot de pass entré avec celui dans la base de donées
       const match = await bcrypt.compare(req.body.password, user.password);
 
 if(match){
     res.cookie('user', user, { maxAge: 1000*60*60, httpOnly: true ,signed:true});
-      res.redirect("/");
+    res.send({"msg":"ok"});
+}else{
+  res.send({"msg":"ko"});
 }
-
+    
       
+      }).catch((err)=>{
+        res.send({"msg":"ko"});
       });
 
   }

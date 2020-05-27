@@ -1,20 +1,47 @@
 <%-include ('partials/partials.ejs')%>
 
 <div class="container">
-<form action="/login" method="POST">
+  <div class="msg"></div>
+
 
     <div class="form-group">
       <label for="email1">Email address</label>
-      <input type="email" class="form-control" name="email" id="email1" aria-describedby="emailHelp" placeholder="Enter email">
+      <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
       <small id="email" name="email"  class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+      <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+    <button id="valider" class="btn btn-primary">Submit</button>
+
 
 </div>
+<%-include ('partials/script.ejs') %>
+<script>
+
+$("#valider").click(()=>{
+  console.log("object")
+  data={}
+  data["email"]=$("#email").val()
+  data["password"]=$("#password").val()
+  console.log(data)
+$.ajax({
+  url:"/login",type:"POST",
+  data:data,
+  success:(resp)=>{
+    if(resp.msg=="ok") { location.href="http://localhost:3000";}
+    else{
+      $(".msg").show(100, "swing");
+                $(".msg").html(
+                  '<button type="button" id="validationpanier" class="btn btn-danger">Erreur login</button>'
+                  );
+                $(".msg").delay(2250).hide(50, "swing");
+    }
+  }
+})
+
+} )
+</script>
