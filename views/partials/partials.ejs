@@ -6,25 +6,25 @@
     <script src="https://kit.fontawesome.com/e2a4bb1024.js" crossorigin="anonymous"></script>
 
     <div class="jumbotron jumbotron-fluid d-flex col-12 p-0 mb-0"  style="background-color:#2d2d2d;">
-        <div class="container col-9">
-          <h1 class="display-5 text-white mt-5 ml-5 text-center">VETEMENTS ET BIJOUX ARTISANAUX</h1>
+        <div class="container col-8" id="header">
+          <h1 class="display-5 text-white mt-5 text-center">VETEMENTS ET BIJOUX ARTISANAUX</h1>
           <p class="lead text-center text-white">Achetez les plus beaux vêtements et bijoux.</p>
         </div>
 
 <%if(typeof user!="undefined" ){%>
-        <div class="  d-flex col-1 p-0 mb-0" style="background-color:#525050;" >
+        <div class="  d-flex col-2 p-0 mb-0" style="background-color:#525050;" >
             <div class="align-self-center  m-auto "><a href="/deconnection"><i class="fas fa-user-alt" style="font-size:2em;"></i></a></div>
         </div>
-        <div class=" d-flex col-1 p-0 mb-0" style="background-color:#796a5a;" >
+        <div class=" d-flex col-2 p-0 mb-0" style="background-color:#796a5a;" >
           <div class="align-self-center  m-auto "><a href="/panier"> <i class="fas fa-shopping-cart" style="font-size:2em;""></i></a></div>
       </div>
 <%}else{%>
-  <div class=" d-flex col-1 p-0 mb-0" style="background-color:#525050;" >
+  <div class=" d-flex col-2 p-0 mb-0" style="background-color:#525050;" >
       <div class="align-self-center m-auto "><a href="/connection"><i class="fas fa-user-alt" style="font-size:2em;"></i></a></div>
   </div>
 
   
-  <div class=" d-flex col-1 p-0 mb-0" style="background-color:#796a5a;" >
+  <div class=" d-flex col-2 p-0 mb-0" style="background-color:#796a5a;" >
       
     <div class="align-self-center m-auto "> 
       
@@ -65,30 +65,11 @@
 
 
       <style>
-       .tooltip {
-  position: relative;
-display: inline-block;
-  
+ @media all and (max-width: 400px){
+#header *{
+  font-size:2rem;
 }
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -60px;
-}
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
+ }
         </style>

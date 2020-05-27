@@ -36,8 +36,6 @@ if (process.env.DATABASE_URL) {
  */
 controller.liste=(req,res) => {
 
-console.log(req.signedCookies);
-
   //réccupére tous les produits de panier de l'utilisateur
     panier.findAll({
       
@@ -59,13 +57,13 @@ for(p of data){
  */
 controller.ajout=(req,res)=>{
 var produitid=req.body.produitid;
-console.log(produitid)
+
 produit.findOne({
   where: {
       id: { [seq.eq]:produitid
   }
 }}).then((p)=>{ if(p.stock==0){ 
-console.log("stock : "+p.stock)
+
   res.send({"msg":"ko"});
 }else{
 
@@ -74,11 +72,9 @@ console.log("stock : "+p.stock)
     quantite:req.body.quantite,
     prix_unitaire:req.body.prix   
 }).then(()=>{
-  /*req.session.user=user */
 
   panier.findAll({limit:1,order:[["id","DESC"]]}).then(current=>{
-    /*req.session.user=user */
-
+//crér dans panier_produit pour faire les lien avec la table produit
     panier_produit.create(
       {
         panierId:current[0].id,

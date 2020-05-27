@@ -1,10 +1,8 @@
 controller={}
 const users=require('../model/users').users;
-var Sequelize = require('sequelize');
-var jwt = require('jsonwebtoken');
-var cookieParser = require('cookie-parser');
+var Sequelize=require('sequelize')
+var bcrypt = require('bcrypt');
 var sequelize;
-//db=(typeof process.env.DB_DATABASE!="undefined") ? process.env.DB_CONNECTION+"://"+process.env.DB_USER+":"+process.env.DB_PASSWORD+"@"+process.env.DB_HOST+":"+process.env.DB_PORT+"/"+process.env.DB_DATABASE :"mysql://root:root@localhost:3306/vetement"
 if (process.env.DATABASE_URL) {
     // the application is executed on Heroku ... use the postgres database
     sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -22,56 +20,27 @@ if (process.env.DATABASE_URL) {
   }
 
   controller.connect=(req,res) => {
+    console.log("connexion")
       res.render("login");
   } 
 
+  /**  verifie si c'est le bon utilisateur
+    * @method POST
+    * @url /login
+   */
+  controller.login= (req,res) => {
 
-/*   controller.login=(req, res, email, password, callback) => {
+    users.findOne({where:{email: req.body.email}  }).then(async (user) => {
+      //compare le hashh du mot de pass entré avec celui dans la base de donées
+      const match = await bcrypt.compare(req.body.password, user.password);
 
-    
-      const mysql = require('mysql2');
-      const bcrypt = require('bcrypt');
-    
-      const connection = mysql({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'vetement'
-      });
-    
-      connection.connect();
-    
-      const query = 'SELECT email, password FROM users WHERE email = ?';
-    
-      connection.query(query, [ email ], function(err, results) {
-        if (err) return callback(err);
-        if (results.length === 0) return callback(new WrongUsernameOrPasswordError(email));
-        const user = results[0];
-    
-        bcrypt.compare(password, user.password, function(err, isValid) {
-          if (err || !isValid) return callback(err || new WrongUsernameOrPasswordError(email));
-    
-          callback(null, {
-            user_id: user.id.toString(),
-            nickname: user.nickname,
-            email: user.email
-          });
-        });
-      });
-    
-    
-    } */
-
-  controller.login=(req,res) => {
-
-    users.findOne({where:{email: req.body.email,password: req.body.password}  }).then((user) => {
-     // console.log(user)
-    //  req.session.user=user
-    var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+if(match){
     res.cookie('user', user, { maxAge: 1000*60*60, httpOnly: true ,signed:true});
       res.redirect("/");
-    
-    })
+}
+
+      
+      });
 
   }
 

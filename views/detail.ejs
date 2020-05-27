@@ -72,10 +72,12 @@
 <%for(c of coms){%>
             <p> <%=c.commentaire%> </p> 
             <small class="text-muted">Posted by <%=c.user.nom_client%> on <%=moment(c.date_commentaire).format("DD MMMM YYYY LT")%></small>
-       
+            <%if(typeof user !="undefined"){%>
+
             <%if(c.user.id==user.id){%> <button class="btn btn-primary" data-nom="<%=c.commentaire%>"  onclick="update('<%=c.id%>')">Modifier</button><%}%>
             <%if(user.role=='admin'){%> <button class="btn btn-warning" onclick="removeCom('<%=c.id%>')">Supprimer</button><%}%>
-      
+           
+            <%}%>
             <hr>
 <%}%>
           </div>

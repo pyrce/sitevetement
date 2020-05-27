@@ -1,12 +1,13 @@
 controller = {}
 const produits = require('../model/produits').produits;
+var Sequelize = require('sequelize');
 
+var bcrypt = require('bcrypt');
 const com = require("../model/commentaires").commentaires;
 var jwt = require('jsonwebtoken');
 const users = require("../model/users").users;
 var cookieParser = require('cookie-parser');
 const moment = require("moment")
-var Sequelize = require('sequelize');
 const seq = Sequelize.Op;
 //var passport = require('passport');
 var sql = require("mysql2");
@@ -52,30 +53,35 @@ produits.belongsTo(cat, {
  * @url /
  */
 controller.liste = (req, res) => {
- 
-
+   /* bcrypt.hash("pass", 1, function(err, hash) {
+        // Store hash in your password DB.
+        console.log(hash)
+        users.update(
+          { password: hash },
+          {where:{id:2}}
+        )
+        users.update(
+            { password: hash },
+            {where:{id:1}}
+          )
+})*/
+    
+    var offset=0;
     const pageSize = 5;
     var page = (typeof req.params.page != "undefined" || parseInt(req.params.page) > 0) ? parseInt(req.params.page) : 1
-    var offset = Math.abs((1 - parseInt(page))) * pageSize; // calcul le nombre de ligne ignoré
+    if(!isNaN(page))
+    offset = Math.abs((1 - parseInt(page))) * pageSize; // calcul le nombre de ligne ignoré
 
-    /*  produits.findAll( {
+      produits.findAll( {
          
          include: [{
                   model: cat,where:{ etat:{[seq.eq]:1} },//ne liste que les produits actifs
                  
-              }]
-              
-          },{limit:limit,offset:offset})*/
-    sequelize.query("SELECT * from produits p " +
-            " join categories c on p.categories_id=c.id where c.etat=1 order by p.id asc limit :start offset :end ", {
-                replacements: {
-                    start: pageSize,
-                    end: offset
-                }
-            })
+              }],
+              limit:pageSize,offset:offset,order:[ ["id","ASC"]]
+          },{})
         .then((data) => {
-            //res.send(data[ Math.abs((1-parseInt(page))) ])
-     
+        
             cat.findAll({
                 where: {
                     etat: {
@@ -83,14 +89,16 @@ controller.liste = (req, res) => {
                     }
                 }
             }).then((cats) => { //listes des categorie pour la rechrerche
-
+produits.findAll({}).then(allproduits=>{
                 res.render("accueil", {
-                    product: data[0],
-                    total: data.length,
+                    product: data,
+                    total: allproduits.length/pageSize,
                     pages: pageSize,
                     cats: cats,
                     user: req.signedCookies["user"]
                 });
+})
+
             })
 
 

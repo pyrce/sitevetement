@@ -6,12 +6,10 @@ const comController=require("../controller/commentsController.js");
 const catController=require("../controller/categoriesController.js");
 const userController=require("../controller/usersController.js")
 const paiementController=require("../controller/paiementController.js");
-//module.exports = function (app, passport) {
 
-  /*  router.post("/login",passport.authenticate('local-login',{
-    failureRedirect: '/login',
-    failureFlash: true }),(req,res)=>{res.redirect("/")});
-router.get("/login",(req,res)=>{res.render("login")})*/
+router.get("/connection",userController.connect)
+router.post("/login",userController.login);
+router.get("/deconnection",userController.deconnection)
 
 router.get("/", operationController.liste);
 router.put("/commentaires", comController.ajout);
@@ -40,15 +38,9 @@ router.get("/produits/modifier/:id",operationController.modifier)
 router.post("/produits/:id",operationController.update)
 router.delete("/produits/:id",operationController.delete)
 
-router.get("/connect/:id",userController.connect)
-router.get("/deconnection",userController.deconnection)
-
 router.post("/my-api/login/",paiementController.login);
 router.post("/my-api/create-payment/",paiementController.createpaiement);
 router.post("/my-api/execute-payment/",paiementController.executepaiement);
-router.get("/connection",userController.connect)
-router.post("/login",userController.login);
-router.get("/deconnection",userController.deconnection)
-//ifreturn router;
-//}
+
+
 module.exports = router;
