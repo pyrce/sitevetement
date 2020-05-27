@@ -11,10 +11,10 @@ app.use(bodyParser());
 
 // importing routes
 
-const panierRoutes = require('./route/panierRoute');
+const panierRoutes = require('./src/route/panierRoute');
 //var passport = require('passport');
 
-const comRoutes = require('./route/comRoutes');
+
 // settings
 app.set('port', process.env.PORT || 3000);
 // app.set('views', path.join(__dirname, 'views'));
@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser("secret")); // read cookies (needed for auth)
 
 //app.use(flash());
-const operationRoutes = require("./route/siteRoutes");
+const operationRoutes = require("./src/route/siteRoutes");
 app.use('/', operationRoutes);
 // starting the server
 app.listen(app.get('port'), () => {
