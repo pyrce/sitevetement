@@ -25,7 +25,12 @@ if (process.env.DATABASE_URL) {
         protocol: 'mysql',
         // disable logging; default: console.log
         logging: true,
-        logging: console.log
+      logging: function (str) {
+        // do your own logging
+        console.log(str)
+
+    }
+
 
     });
 }
@@ -80,7 +85,7 @@ controller.liste = (req, res) => {
             }).then((cats) => { //listes des categorie pour la rechrerche
 
                 res.render("accueil", {
-                    product: data[Math.abs((1 - parseInt(page)))],
+                    product: data[0],
                     total: data.length,
                     pages: pageSize,
                     cats: cats,
@@ -100,24 +105,10 @@ controller.liste = (req, res) => {
  * @version 1.0
  */
 controller.listeproduits = (req, res) => {
-    if (typeof req.session.user == "undefined") {
-        req.session.user = {
-            id: 1,
-            nom_client: "tom"
-        }
 
-    }
-    const pageSize = 10;
+    
 
-    if (typeof req.session.user == "undefined") {
-        req.session.user = {
-            id: 1,
-            nom_client: "tom"
-        }
-
-
-
-        const pageSize = 12;
+        const pageSize = 5;
 
         /* var page = (typeof req.params.page != "undefined" || parseInt(req.params.page)>0 ) ? req.params.page : 0
         var offset = Math.abs((1-parseInt(page))) * pageSize;// calcul le nombre de ligne ignoré
@@ -126,19 +117,21 @@ controller.listeproduits = (req, res) => {
         var offset = parseInt(page) * pageSize;
         const limit = pageSize;
 
-
         var cat_id = req.body.cat_id != '' ? req.body.cat_id : null
         console.log("debut")
         var wherestmt = {}
         var prices = []
+      
         //verifie si on recupere le champ cat_id
-        if (req.body.cat_id != '') {
+       /* if (cat_id != '') {
             wherestmt["categories_id"] = {}
             wherestmt["categories_id"] = {
-                [seq.eq]: cat_id
+                [seq.eq]: parseInt(cat_id)
             }
-        }
-        console.log(wherestmt)
+        }*/
+
+console.log(typeof cat_id);
+       
         wherestmt["prix_unitaire"] = {}
         if (Number(req.body.prixmin) > 0) {
 
@@ -150,7 +143,8 @@ controller.listeproduits = (req, res) => {
         }
         //si pn entre unnn prix max, met dans le talbeau
         if (Number(req.body.prixmax) > 0) {
-            prices.push(req.body.prixmax)
+           
+            prices.push(Number(req.body.prixmax))
         }
 
         //si le tableau contient 1 élément on cherche tous les prodduits dont le prix est supperieur
@@ -162,9 +156,16 @@ controller.listeproduits = (req, res) => {
         }
 
         produits.findAll({
-                where: wherestmt
-
-            }, )
+         
+            include: [{
+                     model: cat,//ne liste que les produits actifs
+                    where:{id:cat_id}
+                 }]
+                 
+             },{
+                where: wherestmt,
+            
+            })
             .then((data) => {
                 /*req.session.user=user */
                 //  console.log(data[0])
@@ -173,7 +174,7 @@ controller.listeproduits = (req, res) => {
 
 
             })
-    }
+    
 
 }
 
@@ -183,13 +184,7 @@ controller.listeproduits = (req, res) => {
  * @version 1.0
  */
 controller.detail = (req, res) => {
-    if (typeof req.session.user == "undefined") {
-        req.session.user = {
-            id: 1,
-            nom_client: "tom"
-        }
 
-    }
     produits.findOne({
         where: {
             id: {
@@ -212,24 +207,16 @@ controller.detail = (req, res) => {
         }).then((coms) => {
             /*req.session.user=user */
             // res.send(coms)
-            users.findOne({
-                where: {
-                    id: {
-                        [seq.eq]: req.session.user.id
-                    }
-                }
-            }).then(user => {
+       
                 /*req.session.user=user */
                 res.render("detail", {
                     produit: produit,
                     coms: coms,
                     moment: moment,
-                    user: user
+                    user: req.signedCookies["user"]
                 });
-            })
+            
         })
-
-
 
     })
 

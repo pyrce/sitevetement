@@ -32,7 +32,7 @@
                 <input id="quantite" min="1" max="<%=produit.stock%>" type="number" value="1">
             </div>
             <div class="form-group">
-              <button onclick="addpanier()" class="btn" style="background-color: #796a5a; color: white;">Ajouter au panier</button>
+              <button onclick="addpanier()" <%= typeof user!="undefined" ? '' : 'disabled' %>  class="btn" style="background-color: #796a5a; color: white;">Ajouter au panier</button>
           </div>
         <div id="msg"></div>
           </div>
@@ -55,11 +55,11 @@
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Commentaire</label>
                 <textarea class="form-control" id="com" rows="3"></textarea>
-              </div>
+       
               <div class="form-group">
-                <button  class="btn" onclick="addcom()" style="background-color: #796a5a; color: white;">Laisser un commentaire</button>
+                <button  class="btn" onclick="addcom()" <%= typeof user!="undefined" ? '' : 'disabled' %> style="background-color: #796a5a; color: white;">Laisser un commentaire</button>
               </div>
-         
+      
           </div>
         </div>
         <!-- /.card -->
@@ -72,8 +72,10 @@
 <%for(c of coms){%>
             <p> <%=c.commentaire%> </p> 
             <small class="text-muted">Posted by <%=c.user.nom_client%> on <%=moment(c.date_commentaire).format("DD MMMM YYYY LT")%></small>
+       
             <%if(c.user.id==user.id){%> <button class="btn btn-primary" data-nom="<%=c.commentaire%>"  onclick="update('<%=c.id%>')">Modifier</button><%}%>
             <%if(user.role=='admin'){%> <button class="btn btn-warning" onclick="removeCom('<%=c.id%>')">Supprimer</button><%}%>
+      
             <hr>
 <%}%>
           </div>

@@ -34,6 +34,7 @@ router.get("/produits/gerer", operationController.gerer);
 router.get("/produits/ajout", operationController.ajout);
 router.get("/produits/:id", operationController.detail);
 router.post("/",operationController.listeproduits)
+router.get("/:page",operationController.liste)
 router.post("/produits/add",operationController.add)
 router.get("/produits/modifier/:id",operationController.modifier)
 router.post("/produits/:id",operationController.update)
