@@ -32,7 +32,7 @@ $.ajax({
   url:"/login",type:"POST",
   data:data,
   success:(resp)=>{
-    if(resp.msg=="ok") { location.href="http://localhost:3000";}
+    if(resp.msg=="ok") { location.href=location.origin;}
     else{
       $(".msg").show(100, "swing");
                 $(".msg").html(

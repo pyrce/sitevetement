@@ -21,14 +21,14 @@ CREATE TABLE users (
   adresse_livraison varchar(45) DEFAULT NULL,
   adresse varchar(45) DEFAULT NULL,
   telephone integer DEFAULT NULL,
-  password varchar(45) DEFAULT NULL,
+  password varchar(255) DEFAULT NULL,
   email varchar(45) DEFAULT NULL,
   role varchar(45) DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
-INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'pass','user@mail.fr','client'),
-(2,'admin','admin','25 avenue tom','14 ch vale',12399,'pass','admin@mail.fr','admin');
+INSERT INTO users VALUES (1,'tom','tom','3 rue garnfe','14 ch vale',123,'$2b$04$Uc7xqQtxeKDLuRDDWQEapem0c7fHrtd4lrxbHu7CE.ywGyLD0P9P6','user@mail.fr','client'),
+(2,'admin','admin','25 avenue tom','14 ch vale',12399,'$2b$04$Uc7xqQtxeKDLuRDDWQEapem0c7fHrtd4lrxbHu7CE.ywGyLD0P9P6','admin@mail.fr','admin');
 create sequence pan_seq;
 CREATE TABLE panier (
   id integer NOT NULL DEFAULT nextval('pan_seq'),
