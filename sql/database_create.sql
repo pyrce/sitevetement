@@ -5,6 +5,12 @@ drop table if exists commentaires;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS produits CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
+
+
+drop sequence IF EXISTS pan_seq;
+drop sequence IF EXISTS com_seq;
+drop sequence IF EXISTS panier_seq;
+
 CREATE TABLE categories (
   id integer NOT NULL  ,
   nom_categorie varchar(45) DEFAULT NULL,
