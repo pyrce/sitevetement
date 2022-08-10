@@ -1,6 +1,6 @@
 controller = {}
 const produits = require('../model/produits').produits;
-var Sequelize = require('sequelize');
+
 
 var bcrypt = require('bcrypt');
 const com = require("../model/commentaires").commentaires;
@@ -8,33 +8,12 @@ var jwt = require('jsonwebtoken');
 const users = require("../model/users").users;
 var cookieParser = require('cookie-parser');
 const moment = require("moment")
+const {sequelize,Sequelize}=require("../model/onfig")
 const seq = Sequelize.Op;
 //var passport = require('passport');
 var sql = require("mysql2");
 const cat = require("../model/categories").categories;
 
-var sequelize;
-if (process.env.DATABASE_URL) {
-    // the application is executed on Heroku ... use the postgres database
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
-        dialect: 'postgres',
-        protocol: 'postgres'
-    })
-} else {
-    sequelize = new Sequelize("mysql://root:@localhost:3306/vetement", {
-        dialect: 'mysql',
-        protocol: 'mysql',
-        // disable logging; default: console.log
-        logging: true,
-      logging: function (str) {
-        // do your own logging
-        console.log(str)
-
-    }
-
-
-    });
-}
 users.hasMany(com);
 com.belongsTo(users);
 moment.locale('fr');

@@ -2,23 +2,7 @@ controller={}
 
 const cat=require('../model/categories').categories;
 var mysql = require('mysql2');
-var Sequelize=require('sequelize')
-var sequelize;
-if (process.env.DATABASE_URL) {
-    // the application is executed on Heroku ... use the postgres database
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
-      dialect:  'postgres',
-      protocol: 'postgres'
-    })
-  }else{
-     sequelize = new Sequelize("mysql://root:@localhost:3306/vetement",{
-        dialect:  'mysql',
-        protocol: 'mysql',
-        // disable logging; default: console.log
-        logging: false
-      
-      });
-  }
+const {sequelize,Sequelize}=require("../model/onfig")
 /**Affiche la page des categories
  * @method GET
  * @url /categories

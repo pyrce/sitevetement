@@ -1,23 +1,7 @@
 controller={}
 const users=require('../model/users').users;
-var Sequelize=require('sequelize')
 var bcrypt = require('bcrypt');
-var sequelize;
-if (process.env.DATABASE_URL) {
-    // the application is executed on Heroku ... use the postgres database
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
-      dialect:  'postgres',
-      protocol: 'postgres'
-    })
-  }else{
-     sequelize = new Sequelize("mysql://root:@localhost:3306/vetement",{
-        dialect:  'mysql',
-        protocol: 'mysql',
-        // disable logging; default: console.log
-        logging: false
-      
-      });
-  }
+const {sequelize,Sequelize}=require("../model/onfig")
 
   controller.connect=(req,res) => {
     console.log("connexion")
