@@ -8,7 +8,7 @@ const app = express();
 var cookieParser = require('cookie-parser');
 //var flash = require('connect-flash');
 app.use(bodyParser());
-
+console.time("start-server")
 // importing routes
 
 const panierRoutes = require('./src/route/panierRoute');
@@ -33,6 +33,7 @@ app.use(cookieParser("secret")); // read cookies (needed for auth)
 //app.use(flash());
 const operationRoutes = require("./src/route/siteRoutes");
 app.use('/', operationRoutes);
+console.timeEnd("start-server")
 // starting the server
 app.listen(app.get('port'), () => {
   console.log(app.get("host"))
