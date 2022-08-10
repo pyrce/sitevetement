@@ -6,7 +6,7 @@ const panier_produit=require('../model/panier_produits').panier_produit;
 const users=require('../model/users').users;
 var produit=produitModel.produits;
 var mysql = require('mysql2');
-const {sequelize,Sequelize}=require("../model/onfig")
+const {sequelize,Sequelize}=require("../model/config")
 const seq = Sequelize.Op;
   panier.belongsTo(users);
   users.hasMany(panier);

@@ -2,7 +2,7 @@ controller={}
 
 const cat=require('../model/categories').categories;
 var mysql = require('mysql2');
-const {sequelize,Sequelize}=require("../model/onfig")
+const {sequelize,Sequelize}=require("../model/config")
 /**Affiche la page des categories
  * @method GET
  * @url /categories

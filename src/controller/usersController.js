@@ -1,7 +1,7 @@
 controller={}
 const users=require('../model/users').users;
 var bcrypt = require('bcrypt');
-const {sequelize,Sequelize}=require("../model/onfig")
+const {sequelize,Sequelize}=require("../model/config")
 
   controller.connect=(req,res) => {
     console.log("connexion")

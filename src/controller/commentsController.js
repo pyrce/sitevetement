@@ -4,7 +4,7 @@ const produits=require('../model/produits').produits;
 var sql = require("mysql2");
 var moment=require('moment');
 const com=require("../model/commentaires").commentaires;
-const {sequelize,Sequelize}=require("../model/onfig")
+const {sequelize,Sequelize}=require("../model/config")
   users.hasMany(com);
   com.belongsTo(users);
 /** Renvoie la liste des commentaires d'un produit
