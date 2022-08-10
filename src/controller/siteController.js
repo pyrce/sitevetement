@@ -45,6 +45,7 @@ controller.liste = (req, res) => {
           )
 })*/
     console.time("liste-article")
+    
     var offset=0;
     const pageSize = 5;
     var page = (typeof req.params.page != "undefined" || parseInt(req.params.page) > 0) ? parseInt(req.params.page) : 1
@@ -70,6 +71,7 @@ controller.liste = (req, res) => {
             }).then((cats) => { //listes des categorie pour la rechrerche
 produits.findAll({}).then(allproduits=>{
     console.timeEnd("liste-article")
+
                 res.render("accueil", {
                     product: data,
                     total: allproduits.length/pageSize,
