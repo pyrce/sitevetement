@@ -36,10 +36,9 @@ app.use('/', operationRoutes);
 console.timeEnd("start-server")
 // starting the server
 
-function start(){
+
 app.listen(app.get('port'), () => {
   console.log(app.get("host"))
     console.log(`server on port ${app.get('port')}`);
   });
-}
-  throng({ start, count: 2 })
+
