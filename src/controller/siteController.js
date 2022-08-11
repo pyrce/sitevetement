@@ -2,6 +2,7 @@ controller = {}
 const produits = require('../model/produits').produits;
 
 
+
 var bcrypt = require('bcrypt');
 const com = require("../model/commentaires").commentaires;
 var jwt = require('jsonwebtoken');
@@ -23,7 +24,6 @@ cat.hasMany(produits, {
 produits.belongsTo(cat, {
     foreignKey: produits.categoryId
 });
-
 
 
 /**Affiche la page avec la liste des produits et une zone de recherche par prix et categories.

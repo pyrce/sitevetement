@@ -29,14 +29,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser("secret")); // read cookies (needed for auth)
-
+const throng = require('throng')
 //app.use(flash());
 const operationRoutes = require("./src/route/siteRoutes");
 app.use('/', operationRoutes);
 console.timeEnd("start-server")
 // starting the server
+
+function start(){
 app.listen(app.get('port'), () => {
   console.log(app.get("host"))
     console.log(`server on port ${app.get('port')}`);
   });
-
+}
+  throng({ start, count: 2 })
