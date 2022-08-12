@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express();
+var timeout = require('connect-timeout')
+
 const operationController = require("../controller/siteController.js");
 const panierController = require("../controller/panierController.js");
 const comController=require("../controller/commentsController.js");
@@ -11,7 +13,7 @@ router.get("/connection",userController.connect)
 router.post("/login",userController.login);
 router.get("/deconnection",userController.deconnection)
 
-router.get("/", operationController.liste);
+router.get("/", timeout('5s'),operationController.liste);
 router.put("/commentaires", comController.ajout);
 router.get("/commentaires", comController.liste);
 router.post("/commentaires/:id", comController.update);
