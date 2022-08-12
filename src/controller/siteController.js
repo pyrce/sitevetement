@@ -51,7 +51,6 @@ controller.liste = (req, res) => {
     var page = (typeof req.params.page != "undefined" || parseInt(req.params.page) > 0) ? parseInt(req.params.page) : 1
     if(!isNaN(page))
     offset = Math.abs((1 - parseInt(page))) * pageSize; // calcul le nombre de ligne ignoré
-try {
     
 
       produits.findAll( {
@@ -63,7 +62,7 @@ try {
               limit:pageSize,offset:offset,order:[ ["id","ASC"]]
           },{})
         .then((data) => {
-        
+            console.log("data")
             cat.findAll({
                 where: {
                     etat: {
@@ -71,9 +70,10 @@ try {
                     }
                 }
             }).then((cats) => { //listes des categorie pour la rechrerche
+                console.log("categorie")
 produits.findAll({}).then(allproduits=>{
     console.timeEnd("liste-article")
-
+console.log("allproduits")
                 res.render("accueil", {
                     product: data,
                     total: allproduits.length/pageSize,
@@ -89,9 +89,7 @@ produits.findAll({}).then(allproduits=>{
 
         })
 
-} catch (error) {
-    console.log(error)
-}
+
 }
 /** Lors qu'on effectue une recherche , on retourne la liste des produits correspondant aux critères
  * @method GET
