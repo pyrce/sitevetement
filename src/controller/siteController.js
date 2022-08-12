@@ -51,6 +51,8 @@ controller.liste = (req, res) => {
     var page = (typeof req.params.page != "undefined" || parseInt(req.params.page) > 0) ? parseInt(req.params.page) : 1
     if(!isNaN(page))
     offset = Math.abs((1 - parseInt(page))) * pageSize; // calcul le nombre de ligne ignoré
+try {
+    
 
       produits.findAll( {
          
@@ -87,6 +89,9 @@ produits.findAll({}).then(allproduits=>{
 
         })
 
+} catch (error) {
+    console.log(error)
+}
 }
 /** Lors qu'on effectue une recherche , on retourne la liste des produits correspondant aux critères
  * @method GET
