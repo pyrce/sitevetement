@@ -9,7 +9,8 @@ if (process.env.DATABASE_URL) {
       protocol: 'postgres',
       ssl: {
         rejectUnauthorized: false
-      }
+      },
+      logging: true
     })
   }else{
      sequelize = new Sequelize("mysql://root:root@localhost:3306/vetement",{

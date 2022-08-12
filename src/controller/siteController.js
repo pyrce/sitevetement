@@ -45,7 +45,7 @@ controller.liste = (req, res) => {
           )
 })*/
     console.time("liste-article")
-    console.log(req)
+
     var offset=0;
     const pageSize = 5;
     var page = (typeof req.params.page != "undefined" || parseInt(req.params.page) > 0) ? parseInt(req.params.page) : 1
