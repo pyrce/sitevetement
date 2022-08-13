@@ -52,7 +52,7 @@ controller.liste = (req, res) => {
     if(!isNaN(page))
     offset = Math.abs((1 - parseInt(page))) * pageSize; // calcul le nombre de ligne ignoré
     
-
+console.log("debut recherche articles")
       produits.findAll( {
          
          include: [{
