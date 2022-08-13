@@ -13,7 +13,7 @@ router.get("/connection",userController.connect)
 router.post("/login",userController.login);
 router.get("/deconnection",userController.deconnection)
 
-router.get("/", timeout('20s'),operationController.liste);
+router.get("/",operationController.liste);
 router.put("/commentaires", comController.ajout);
 router.get("/commentaires", comController.liste);
 router.post("/commentaires/:id", comController.update);
