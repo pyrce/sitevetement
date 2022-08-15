@@ -59,7 +59,7 @@ controller.liste = async (req, res) => {
                 
              }],
              limit:pageSize,offset:offset,order:[ ["id","ASC"]]
-         },{});
+         });
          console.log(p)
 console.table("offest : "+offset)
       produits.findAll( {
