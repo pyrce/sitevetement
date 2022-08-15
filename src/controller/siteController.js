@@ -32,7 +32,7 @@ produits.belongsTo(cat, {
  * @method GET
  * @url /
  */
-controller.liste = (req, res) => {
+controller.liste = async (req, res) => {
    /* bcrypt.hash("pass", 1, function(err, hash) {
         // Store hash in your password DB.
         console.log(hash)
@@ -52,7 +52,15 @@ controller.liste = (req, res) => {
     var page = (typeof req.params.page != "undefined" || parseInt(req.params.page) > 0) ? parseInt(req.params.page) : 1
     if(!isNaN(page))
     offset = Math.abs((1 - parseInt(page))) * pageSize; // calcul le nombre de ligne ignoré
-    
+    let p=await       produits.findAll( {
+         
+        include: [{
+                 model: cat,where:{ etat:{[seq.eq]:1} },//ne liste que les produits actifs
+                
+             }],
+             limit:pageSize,offset:offset,order:[ ["id","ASC"]]
+         },{});
+         console.log(p)
 console.table("offest : "+offset)
       produits.findAll( {
          
