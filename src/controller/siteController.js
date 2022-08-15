@@ -15,7 +15,7 @@ const seq = Sequelize.Op;
 //var passport = require('passport');
 var sql = require("mysql2");
 const cat = require("../model/categories").categories;
-new sequelize();
+ sequelize;
 users.hasMany(com);
 com.belongsTo(users);
 moment.locale('fr');
