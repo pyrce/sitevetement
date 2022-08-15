@@ -61,7 +61,7 @@ console.table("offest : "+offset)
                  
               }],
               limit:pageSize,offset:offset,order:[ ["id","ASC"]]
-          })
+          },{})
         .then((data) => {   
              console.timeEnd("liste-article")
             console.log("data")
