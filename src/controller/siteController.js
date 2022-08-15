@@ -52,15 +52,7 @@ controller.liste = async (req, res) => {
     var page = (typeof req.params.page != "undefined" || parseInt(req.params.page) > 0) ? parseInt(req.params.page) : 1
     if(!isNaN(page))
     offset = Math.abs((1 - parseInt(page))) * pageSize; // calcul le nombre de ligne ignoré
-    let p=await       produits.findAll( {
-         
-        include: [{
-                 model: cat,where:{ etat:{[seq.eq]:1} },//ne liste que les produits actifs
-                
-             }],
-             limit:pageSize,offset:offset,order:[ ["id","ASC"]]
-         });
-         console.log(p)
+
 console.table("offest : "+offset)
       produits.findAll( {
          
@@ -69,7 +61,7 @@ console.table("offest : "+offset)
                  
               }],
               limit:pageSize,offset:offset,order:[ ["id","ASC"]]
-          },{})
+          })
         .then((data) => {   
              console.timeEnd("liste-article")
             console.log("data")
