@@ -11,11 +11,6 @@ if (process.env.DATABASE_URL) {
       ssl: {
         rejectUnauthorized: true
       },
-      dialectOptions: {
-        options: {
-          requestTimeout: 5000
-        }
-      },
       logging: console.log
     })
   }else{
