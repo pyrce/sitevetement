@@ -11,6 +11,7 @@ if (process.env.DATABASE_URL) {
 
       logging: console.log
     })
+    console.log("init postgres db")
   }else{
      sequelize = new Sequelize("mysql://root:root@localhost:3306/vetement",{
         dialect:  'mysql',
