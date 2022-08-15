@@ -15,7 +15,7 @@ if (process.env.DATABASE_URL) {
           requestTimeout: 5000
         }
       },
-      logging: true
+      logging: console.log
     })
   }else{
      sequelize = new Sequelize("mysql://root:root@localhost:3306/vetement",{
