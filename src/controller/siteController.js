@@ -62,7 +62,8 @@ console.table("offest : "+offset)
               }],
               limit:pageSize,offset:offset,order:[ ["id","ASC"]]
           },{})
-        .then((data) => {
+        .then((data) => {   
+             console.timeEnd("liste-article")
             console.log("data")
             cat.findAll({
                 where: {
@@ -73,7 +74,7 @@ console.table("offest : "+offset)
             }).then((cats) => { //listes des categorie pour la rechrerche
                 console.log("categorie")
 produits.findAll({}).then(allproduits=>{
-    console.timeEnd("liste-article")
+
 console.log("allproduits")
                 res.render("accueil", {
                     product: data,
