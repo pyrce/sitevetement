@@ -1,38 +1,38 @@
 controller = {}
-const produits = require('../model/produits').produits;
 
 
+const {produits,categories,users,commentaires}=require("../model/config");
 
 var bcrypt = require('bcrypt');
-const com = require("../model/commentaires").commentaires;
+
 var jwt = require('jsonwebtoken');
-const users = require("../model/users").users;
+
 var cookieParser = require('cookie-parser');
 const moment = require("moment")
-const sequelize=require("../model/config").sequelize;
-const Sequelize=require("../model/config").Sequelize;
+ //const {sequelize}=require("../model/config");
+const Sequelize= require("Sequelize");
 const seq = Sequelize.Op;
 //var passport = require('passport');
 var sql = require("mysql2");
-const cat = require("../model/categories").categories;
- sequelize;
-users.hasMany(com);
-com.belongsTo(users);
-moment.locale('fr');
-cat.hasMany(produits, {
-    foreignKey: produits.categoryId
-});
-produits.belongsTo(cat, {
-    foreignKey: produits.categoryId
-});
 
+
+
+users.hasMany(commentaires);
+commentaires.belongsTo(users);
+moment.locale('fr');
+categories.hasMany(produits, {
+    foreignKey: produits.categoryId
+});
+produits.belongsTo(categories, {
+    foreignKey: produits.categoryId
+});
 
 /**Affiche la page avec la liste des produits et une zone de recherche par prix et categories.
  * Affichage des produits par un systeme de pagination.
  * @method GET
  * @url /
  */
-controller.liste = async (req, res) => {
+controller.liste =   (req, res) => {
    /* bcrypt.hash("pass", 1, function(err, hash) {
         // Store hash in your password DB.
         console.log(hash)
@@ -45,7 +45,7 @@ controller.liste = async (req, res) => {
             {where:{id:1}}
           )
 })*/
-    console.time("liste-article")
+produits.findAll({}).then( (data)=>{ console.log("result : "); console.log(data); });
 
     var offset=0;
     const pageSize = 5;
@@ -53,19 +53,22 @@ controller.liste = async (req, res) => {
     if(!isNaN(page))
     offset = Math.abs((1 - parseInt(page))) * pageSize; // calcul le nombre de ligne ignoré
 
-console.table("offest : "+offset)
+    console.log("-liste-article-")
+    console.time("liste-article")
+
       produits.findAll( {
          
          include: [{
-                  model: cat,where:{ etat:{[seq.eq]:1} },//ne liste que les produits actifs
-                 
+                  model: categories,where:{ etat:{[seq.eq]:1} },//ne liste que les produits actifs
+              
               }],
-              limit:pageSize,offset:offset,order:[ ["id","ASC"]]
-          },{})
+              limit:pageSize,offset:offset,order:[ ["id","ASC"]],
+        
+          })
         .then((data) => {   
              console.timeEnd("liste-article")
-            console.log("data")
-            cat.findAll({
+            console.log("fin liste article")
+            categories.findAll({
                 where: {
                     etat: {
                         [seq.eq]: 1
@@ -85,8 +88,7 @@ console.log("allproduits")
                 });
 })
 
-            })
-
+            }) 
 
 
         })
@@ -153,7 +155,7 @@ console.log(typeof cat_id);
         produits.findAll({
          
             include: [{
-                     model: cat,//ne liste que les produits actifs
+                     model: categories,//ne liste que les produits actifs
                     where:{id:cat_id}
                  }]
                  
@@ -189,7 +191,7 @@ controller.detail = (req, res) => {
     }).then((produit) => {
         /*req.session.user=user */
         console.log(req.params.id)
-        com.findAll({
+        commentaires.findAll({
             include: [{
                 model: users
             }]
@@ -221,7 +223,7 @@ controller.detail = (req, res) => {
  * @url /produits/ajout 
  */
 controller.ajout = (req, res) => {
-    cat.findAll({
+    categories.findAll({
         where: {
             etat: {
                 [seq.eq]: 1
@@ -230,7 +232,7 @@ controller.ajout = (req, res) => {
     }).then((cats) => {
 
         res.render("ajout", {
-            cat: cats
+            categories: cats
         });
     })
 
@@ -266,11 +268,11 @@ controller.modifier = (req, res) => {
             }
         }
     }).then((data) => {
-        cat.findAll().then((cats) => {
+        categories.findAll().then((cats) => {
             /*req.session.user=user */
             res.render("modifier", {
                 produit: data,
-                cat: cats
+                categories: cats
             });
         })
 
@@ -340,18 +342,18 @@ controller.delete = (req, res) => {
 controller.gerer = (req, res) => {
 
 if(typeof req.signedCookies["user"]!="undefined"){
-    cat.findAll().then((cats) => {
+    categories.findAll().then((cats) => {
         /*req.session.user=user */
         produits.findAll({
             include: [{
-                model: cat
+                model: categories
             }]
         }).then((produits) => {
             /*req.session.user=user */
 
             res.render("gerer", {
                 prod: produits,
-                cat: cats,
+                categories: cats,
                 user:req.signedCookies["user"]
 
             });

@@ -1,15 +1,13 @@
-const {sequelize,Sequelize}=require("./config")
-const panier = sequelize.define('panier', {
+module.exports = (sequelize, DataTypes) => {
+return sequelize.define('panier', {
     id:{
-        type:Sequelize.INTEGER,
+        type:DataTypes.INTEGER,
         allowNull:false,
         autoIncrement:true,
         primaryKey:true
     },
-        quantite:Sequelize.INTEGER,
-        prix_unitaire:Sequelize.FLOAT,
-        userId:{field:"users_id",references:"users",type: Sequelize.INTEGER}
-},{tableName:"panier",timestamps: false});
-
-var exports = module.exports = {};
-exports.panier = panier;
+        quantite:DataTypes.INTEGER,
+        prix_unitaire:DataTypes.FLOAT,
+        userId:{field:"users_id",references:"users",type: DataTypes.INTEGER}
+},{tableName:"panier",freezeTableName:true,timestamps: false});
+}

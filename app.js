@@ -13,14 +13,23 @@ console.time("start-server")
 
 const panierRoutes = require('./src/route/panierRoute');
 //var passport = require('passport');
+const {sequelize}=require("./src/model/config");
 
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 // settings
 app.set('port', process.env.PORT || 3000);
 // app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 //require('./config/passport')(passport); // pass passport for configuration
 
@@ -38,7 +47,7 @@ console.timeEnd("start-server")
 
 
 app.listen(app.get('port'), () => {
-  console.log(app.get("host"))
+
     console.log(`server on port ${app.get('port')}`);
   });
 

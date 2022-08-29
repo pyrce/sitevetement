@@ -1,5 +1,5 @@
 controller={}
-const users=require('../model/users').users;
+const {users}=require("../model/config");
 var bcrypt = require('bcrypt');
 const {sequelize,Sequelize}=require("../model/config")
 

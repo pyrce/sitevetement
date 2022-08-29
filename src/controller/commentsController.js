@@ -1,19 +1,18 @@
 controller={}
-const users=require('../model/users').users;
-const produits=require('../model/produits').produits;
+
 var sql = require("mysql2");
 var moment=require('moment');
-const com=require("../model/commentaires").commentaires;
-const {sequelize,Sequelize}=require("../model/config")
-  users.hasMany(com);
-  com.belongsTo(users);
+
+const {produits,users,commentaires}=require("../model/config");
+  users.hasMany(commentaires);
+  commentaires.belongsTo(users);
 /** Renvoie la liste des commentaires d'un produit
  * @method GET
  *@url /commentaires
 */
 controller.liste=(req,res)=>{
 
-  com.findAll({where:{produitId:req.query.id}, include:[{model:users}]}).then((coms)=>{
+  commentaires.findAll({where:{produitId:req.query.id}, include:[{model:users}]}).then((coms)=>{
     /*req.session.user=user */
     res.send({coms:coms,moment:moment});
   })
@@ -24,7 +23,7 @@ controller.liste=(req,res)=>{
  */
 controller.removeCom=(req,res) => {
   console.log(req.query.id)
-  com.destroy({where:{id:req.params.id}}).then((com)=>{
+  commentaires.destroy({where:{id:req.params.id}}).then((com)=>{
     /*req.session.user=user */
     res.sendStatus(200)
   })
@@ -36,7 +35,7 @@ controller.removeCom=(req,res) => {
 controller.ajout=(req,res) => {
 var usersid=req.body.userid;
 var date=new Date();
-com.create({
+commentaires.create({
     produitId:req.body.produitid,
     commentaire:req.body.com,
     date_commentaire:date ,
@@ -55,7 +54,7 @@ com.create({
 */
 controller.update=(req,res)=>{
 
-  com.findOne({where:{id:req.params.id}}).then( (current_com)=>{
+  commentaires.findOne({where:{id:req.params.id}}).then( (current_com)=>{
     /*req.session.user=user */
     current_com.update({
       commentaire:req.body.comment

@@ -1,6 +1,6 @@
 controller={}
 
-const cat=require('../model/categories').categories;
+const {categories}=require("../model/config");
 var mysql = require('mysql2');
 const {sequelize,Sequelize}=require("../model/config")
 /**Affiche la page des categories
@@ -10,7 +10,7 @@ const {sequelize,Sequelize}=require("../model/config")
  * @version 1.0
  */
 controller.liste=(req,res)=>{
-cat.findAll().then((cats)=>{
+categories.findAll().then((cats)=>{
 /*req.session.user=user */ 
     res.render("categories",{cats:cats, user:req.signedCookies["user"]})
 })
@@ -20,9 +20,9 @@ cat.findAll().then((cats)=>{
  * @param res reponnse serveur
  */
 controller.insert=(req,res)=>{
-cat.findAll({limit:1,order:[["id","DESC"]]}).then((cats)=>{
+categories.findAll({limit:1,order:[["id","DESC"]]}).then((cats)=>{
     /*req.session.user=user */
-    cat.create({id:cats[0].id+1,nom_categorie:req.body.categorie,etat:1}).then((cat)=>{
+    categories.create({id:cats[0].id+1,nom_categorie:req.body.categorie,etat:1}).then((cat)=>{
         /*req.session.user=user */
         res.redirect("/categories")
     })
@@ -48,7 +48,7 @@ controller.update=(req,res) =>{
  * @retourne la page avec la categorie modifié
  */
 controller.updateetat=(req,res) =>{
-    cat.update({
+    categories.update({
         etat:req.body.etat},
         {where:{id:req.params.id}}
     ).then(()=>{
@@ -61,7 +61,7 @@ controller.updateetat=(req,res) =>{
  * @url /categories/:id
 */
 controller.remove=(req,res)=>{
-    cat.destroy({where:{id:req.params.id}}).then( ()=>{
+    categories.destroy({where:{id:req.params.id}}).then( ()=>{
         /*req.session.user=user */
        // res.redirect("/categories");
        res.sendStatus(200)

@@ -1,18 +1,14 @@
 controller={}
-const produitModel=require('../model/produits');
-const cat=require('../model/categories').categories;
-const panier=require('../model/panier').panier;
-const panier_produit=require('../model/panier_produits').panier_produit;
-const users=require('../model/users').users;
-var produit=produitModel.produits;
+
+const {produits,categories,users,panier_produit,panier}=require("../model/config");
 var mysql = require('mysql2');
-const {sequelize,Sequelize}=require("../model/config")
+const Sequelize=require("sequelize")
 const seq = Sequelize.Op;
   panier.belongsTo(users);
   users.hasMany(panier);
 
-  panier.belongsToMany(produit,{through:{model:panier_produit}})
-  produit.belongsToMany(panier,{through:{model:panier_produit}})
+  panier.belongsToMany(produits,{through:{model:panier_produit}})
+  produits.belongsToMany(panier,{through:{model:panier_produit}})
 /**Affiche la page du panier avec les produits de l'utilisateurs
   * @method GET
  * @url /panier
@@ -23,7 +19,7 @@ controller.liste=(req,res) => {
     panier.findAll({
       
       include:[
-{model:produit}
+{model:produits}
     ],where:{users_id:req.signedCookies["user"].id}}).then((data)=>{
 //fait le total des produits
 some=0;
@@ -41,7 +37,7 @@ for(p of data){
 controller.ajout=(req,res)=>{
 var produitid=req.body.produitid;
 
-produit.findOne({
+produits.findOne({
   where: {
       id: { [seq.eq]:produitid
   }

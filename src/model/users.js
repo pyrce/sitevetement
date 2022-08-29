@@ -1,19 +1,17 @@
-const {sequelize,Sequelize}=require("./config")
-const users = sequelize.define('users', {
+module.exports = (sequelize, DataTypes) => {
+return sequelize.define('users', {
     id:{
-        type:Sequelize.INTEGER,
+        type:DataTypes.INTEGER,
         allowNull:false,
         autoIncrement:true,
         primaryKey:true
     },
-        nom_client:Sequelize.STRING(30),
-        prenom_client:{type:Sequelize.STRING(30),field:"prenom_client" },
-        adresse_livraison:Sequelize.STRING(30),
-        adresse:Sequelize.STRING(30),
-        password:Sequelize.STRING(30),
-        email:Sequelize.STRING(30),
-        role:Sequelize.STRING(30),
-},{timestamps:false});
-
-var exports = module.exports = {};
-exports.users = users;
+        nom_client:DataTypes.STRING(30),
+        prenom_client:{type:DataTypes.STRING(30),field:"prenom_client" },
+        adresse_livraison:DataTypes.STRING(30),
+        adresse:DataTypes.STRING(30),
+        password:DataTypes.STRING(30),
+        email:DataTypes.STRING(30),
+        role:DataTypes.STRING(30),
+},{timestamps:false,freezeTableName:true,});
+}

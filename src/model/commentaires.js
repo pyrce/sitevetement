@@ -1,17 +1,15 @@
-const {sequelize,Sequelize}=require("./config")
 
-const commentaires = sequelize.define('commentaires', {
+module.exports = (sequelize, DataTypes) => {
+return sequelize.define('commentaires', {
     id:{
-        type:Sequelize.INTEGER,
+        type:DataTypes.INTEGER,
         allowNull:false,
         autoIncrement:true,
         primaryKey:true
     },
-        commentaire:Sequelize.STRING(30),
-        date_commentaire:{type:Sequelize.DATE },
-        userId:{field:"users_id",references:"users",type:Sequelize.INTEGER},
-        produitId:{field:"produits_id",references:"produits",type:Sequelize.INTEGER},
-},{tableName:"commentaires",timestamps:false});
-
-var exports = module.exports = {};
-exports.commentaires = commentaires;
+        commentaire:DataTypes.STRING(30),
+        date_commentaire:{type:DataTypes.DATE },
+        userId:{field:"users_id",references:"users",type:DataTypes.INTEGER},
+        produitId:{field:"produits_id",references:"produits",type:DataTypes.INTEGER},
+},{tableName:"commentaires",freezeTableName:true,timestamps:false});
+}

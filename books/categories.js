@@ -1,5 +1,7 @@
+
+
 module.exports = (sequelize, DataTypes) => {
-return sequelize.define('categories', {
+return  sequelize.define('categories', {
     id:{
         type:DataTypes.INTEGER,
         allowNull:false,
@@ -9,4 +11,5 @@ return sequelize.define('categories', {
         nom_categorie:DataTypes.STRING(30),
         etat:DataTypes.INTEGER,
 },{tableName:"categories",freezeTableName:true, timestamps: false});
+
 }
