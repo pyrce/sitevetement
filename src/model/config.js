@@ -24,9 +24,12 @@ if (process.env.DATABASE_URL) {
     sequelize = new Sequelize(process.env.DATABASE_URL,{
       dialect:  'postgres',
       protocol: 'postgres',
-      ssl: {
-        require: true,
-        rejectUnauthorized: false 
+      ssl: true,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
       },
       // disable logging; default: console.log
       logging: false
