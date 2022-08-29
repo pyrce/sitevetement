@@ -25,7 +25,7 @@ if (process.env.DATABASE_URL) {
       dialect:  'postgres',
       protocol: 'postgres',
       ssl: {
-        rejectUnauthorized: true
+        rejectUnauthorized: false
       },
       // disable logging; default: console.log
       logging: false
