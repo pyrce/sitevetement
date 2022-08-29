@@ -22,8 +22,8 @@ if (process.env.DATABASE_URL) {
     
     // })
     sequelize = new Sequelize(process.env.DATABASE_URL,{
-      dialect:  'mysql',
-      protocol: 'mysql',
+      dialect:  'postgres',
+      protocol: 'postgres',
       // disable logging; default: console.log
       logging: false
     
